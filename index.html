@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE SUN SHINE - Детективный Портал</title>
     <style>
-        /* Мрачный фон старого деревянного стола детектива */
         body {
-            background-color: #0c0a08;
-            background-image: radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%),
-                              linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
-            background-size: cover, 20px 100%;
+            background-color: #0b0c0d;
             color: #d1c7bd;
             font-family: 'Georgia', serif;
             margin: 0;
@@ -19,119 +15,78 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
+            overflow-x: hidden;
         }
-        
-        /* Эффект стекающих капель дождя по экрану через процедурный код */
+        /* Вечный процедурный CSS-дождь без единой строчки JS */
         .rain-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 3px 120px;
             z-index: 1;
             pointer-events: none;
-            overflow: hidden;
+            animation: css-rain 0.8s linear infinite;
         }
-        .drop {
-            position: absolute;
-            background: linear-gradient(transparent, rgba(255, 255, 255, 0.08));
-            width: 1px;
-            height: 85px;
-            animation: fall linear infinite;
+        @keyframes css-rain {
+            0% { background-position: 0px 0px; }
+            100% { background-position: 20px 600px; }
         }
-        @keyframes fall {
-            0% { transform: translateY(-100px); }
-            100% { transform: translateY(100vh); }
-        }
-        
-        /* Мягкий свет от настольной лампы, падающий на газету */
         .lamp-light {
             position: fixed;
-            top: 0; left: 50%;
-            width: 120vw; height: 120vh;
-            background: radial-gradient(circle, rgba(255, 190, 110, 0.08) 0%, rgba(0,0,0,0) 70%);
-            transform: translateX(-50%);
-            z-index: 2;
-            pointer-events: none;
+            top: 0; left: 50%; width: 120vw; height: 120vh;
+            background: radial-gradient(circle, rgba(255, 190, 110, 0.07) 0%, rgba(0,0,0,0) 70%);
+            transform: translateX(-50%); z-index: 2; pointer-events: none;
         }
-        
         .audio-control-panel {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #141210;
-            border: 1px solid #42352b;
-            padding: 12px;
-            border-radius: 2px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+            bottom: 25px; right: 25px; background: #141210;
+            border: 1px solid #42352b; padding: 12px; border-radius: 2px;
+            z-index: 1000; display: flex; flex-direction: column; align-items: center; gap: 8px;
         }
         .audio-title { font-family: 'Courier New', monospace; font-size: 11px; color: #8c7664; font-weight: bold; }
-        
         .newspaper-container {
-            width: 100%;
-            max-width: 850px;
-            background: #e3dac9; /* Матовая текстура реальной плотной бумаги */
-            color: #1c1a17;
-            border: 1px solid #2b2520;
-            padding: 35px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
-            box-sizing: border-box;
-            position: relative;
-            z-index: 10;
+            width: 100%; max-width: 850px; background: #e3dac9; color: #1c1a17; border: 1px solid #2b2520; padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 80px rgba(255, 190, 110, 0.1); position: relative; z-index: 10;
         }
-        
         .theme-modern .header-main { background: #b0233a; color: #fff; }
         .theme-modern .sub-header { border-color: #1c1a17; color: #3b352e; }
-        .theme-modern .article-headline { background: #262320; color: #e3dac9; border: none; }
-        .theme-modern .article-text-container { color: #1c1a17; }
-        .theme-modern .article-photo-box { background: #d4caa8; border-color: #262320; color: #1c1a17; }
-        
+        .theme-modern .article-headline { background: #262320; color: #e3dac9; }
+        .theme-modern .article-photo-box { background: #d4caa8; border-color: #262320; }
         .theme-vintage { background: #cfc2aa !important; }
         .theme-vintage .header-main { background: #382c21 !important; color: #cfc2aa !important; font-family: 'Times New Roman', serif !important; font-style: italic; }
         .theme-vintage .sub-header { border-color: #382c21 !important; color: #4a3b2c; }
-        .theme-vintage .article-headline { background: #4a3b2c !important; color: #cfc2aa !important; font-family: 'Times New Roman', serif !important; }
-        .theme-vintage .article-text-container { color: #261f17; }
-        .theme-vintage .article-photo-box { background: #beaf96; border-color: #4a3b2c; color: #261f17; }
-
-        .header-main { text-align: center; padding: 20px 10px; font-family: 'Impact', Arial, sans-serif; font-size: 50px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; border: 1px solid rgba(0,0,0,0.1); }
+        .theme-vintage .article-headline { background: #4a3b2c !important; color: #cfc2aa !important; }
+    </style>
+</head>
+<style>
+        .header-main { text-align: center; padding: 20px 10px; font-family: 'Impact', Arial, sans-serif; font-size: 50px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
         .sub-header { display: flex; justify-content: space-between; border-top: 2px solid #1c1a17; border-bottom: 2px solid #1c1a17; padding: 8px 5px; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 30px; font-family: 'Arial', sans-serif; }
         .editor-box { background: rgba(0, 0, 0, 0.04); border: 1px dashed #4a3b2c; padding: 15px; margin-bottom: 30px; }
         .editor-title { color: #262320; font-weight: bold; margin-bottom: 12px; font-size: 13px; font-family: 'Arial', sans-serif; text-transform: uppercase; }
-        
         input, textarea, select { width: 100%; padding: 8px; margin-bottom: 10px; background: #eae3d5; border: 1px solid #9c9181; color: #1c1a17; font-family: 'Georgia', serif; box-sizing: border-box; }
-        input:focus, textarea:focus { outline: 1px solid #1c1a17; background: #fff; }
-        
         .btn { background: #262320; color: #e3dac9; border: 1px solid #1c1a17; padding: 8px 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-family: 'Arial', sans-serif; font-size: 12px; }
-        .btn:hover { background: #b0233a; color: #fff; border-color: #b0233a; }
+        .btn:hover { background: #b0233a; color: #fff; }
         .audio-btn { background: #2b2520; color: #d1c7bd; border: 1px solid #4a3b32; padding: 6px 12px; font-weight: bold; cursor: pointer; font-size: 11px; font-family: 'Courier New', monospace; }
-        .audio-btn:hover { background: #4a3b32; color: #fff; }
-        
         .news-feed { display: flex; flex-direction: column; gap: 35px; }
         .article { border-bottom: 1px solid rgba(28, 26, 23, 0.2); padding-bottom: 30px; position: relative; }
         .article-headline { font-family: 'Impact', Arial, sans-serif; font-size: 24px; text-transform: uppercase; padding: 6px 12px; margin: 0 0 15px 0; letter-spacing: 1px; }
         .article-body { display: flex; gap: 25px; }
-        
-        .article-photo-box { width: 150px; min-width: 150px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.2); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .article-photo-box { width: 150px; min-width: 150px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.2); }
         .article-img { width: 100%; height: 140px; object-fit: cover; border: 1px solid rgba(0,0,0,0.1); cursor: zoom-in; }
         .article-text-container { font-size: 15px; line-height: 1.6; text-align: justify; flex: 1; }
-        
         .delete-btn { display: none; position: absolute; right: 0; bottom: 5px; background: #b0233a; color: #fff; border: none; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: 'Arial', sans-serif; text-transform: uppercase; font-weight: bold; }
         .admin-trigger { color: rgba(255,255,255,0.15); font-size: 11px; cursor: pointer; margin-top: 50px; text-align: center; width: 100%; }
-        
-        .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 7, 10, 0.95); z-index: 10000; justify-content: center; align-items: center; cursor: zoom-out; opacity: 0; transition: opacity 0.25s ease; }
+        .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 7, 10, 0.95); z-index: 10000; justify-content: center; align-items: center; cursor: zoom-out; opacity: 0; }
         .image-viewer-modal.active { display: flex; opacity: 1; }
         .modal-img { max-width: 90%; max-height: 85%; border: 2px solid #4a3b32; box-shadow: 0 0 30px rgba(0,0,0,0.8); object-fit: contain; }
         .modal-caption { position: absolute; bottom: 40px; color: #8c7664; font-family: monospace; font-size: 12px; }
     </style>
 </head>
 <body>
-
+<div class="rain-overlay"></div>
 <div class="lamp-light"></div>
-<div class="rain-overlay" id="rain-layer"></div>
 
 <div class="image-viewer-modal" id="img-modal" onclick="closeImageViewer()">
     <img class="modal-img" id="modal-target-img" src="" alt="Улика">
@@ -140,11 +95,9 @@
 
 <div class="audio-control-panel">
     <div class="audio-title">DECT_AUDIO_GENERATOR</div>
-    <!-- Автономный аудио-поток глухого шума дождя, вшитый прямо текстом в код -->
-    <audio id="ambient-sound" loop src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQgAAAAAAAAA"></audio>
+    <audio id="ambient-sound" loop src="https://mixkit.co"></audio>
     <button class="audio-btn" onclick="playAudio()">[ СИНХРОНИЗИРОВАТЬ ЗВУК ]</button>
 </div>
-
 <div class="newspaper-container theme-modern" id="paper">
     <div class="header-main" id="paper-logo">THE SUN SHINE</div>
     <div class="sub-header">
@@ -168,11 +121,12 @@
     </div>
 
     <div class="news-feed" id="news-container">
-        <!-- Лента новостей заполняется скриптом -->
+        <!-- Лента рапортов -->
     </div>
 </div>
 
 <div class="admin-trigger" onclick="activateAdminMode()">[ ТЕХНИЧЕСКИЙ ДОСТУП РЕДАКТОРА ДЛЯ МОДЕРАЦИИ ]</div>
+
 <script>
     const now = new Date();
     document.getElementById('live-date').textContent = "ДАТА: " + now.toLocaleDateString('ru-RU', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -180,51 +134,11 @@
     let savedArticles = JSON.parse(localStorage.getItem('real_news_articles')) || [];
     let isAdmin = false; const adminPin = "7777";
 
-    // Генерация капель дождя кодом поверх стола
-    function createRain() {
-        const rainLayer = document.getElementById('rain-layer');
-        const dropCount = 65; 
-        for (let i = 0; i < dropCount; i++) {
-            const drop = document.createElement('div');
-            drop.className = 'drop';
-            drop.style.left = Math.random() * 100 + 'vw';
-            drop.style.top = Math.random() * -60 + 'px';
-            drop.style.animationDuration = (Math.random() * 0.7 + 0.4) + 's';
-            drop.style.animationDelay = Math.random() * 2 + 's';
-            rainLayer.appendChild(drop);
-        }
-    }
-
-    // Автономный генератор частот шума дождя (Web Audio API)
-    let audioCtx = null;
     let isPlaying = false;
     function playAudio() {
-        if (!isPlaying) {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let bufferSize = 2 * audioCtx.sampleRate,
-                    noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate),
-                    output = noiseBuffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) { output[i] = Math.random() * 2 - 1; }
-                let whiteNoise = audioCtx.createBufferSource();
-                whiteNoise.buffer = noiseBuffer;
-                whiteNoise.loop = true;
-                
-                let filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass'; filter.frequency.value = 400; 
-                
-                let gainNode = audioCtx.createGain();
-                gainNode.gain.value = 0.12; 
-                
-                whiteNoise.connect(filter); filter.connect(gainNode); gainNode.connect(audioCtx.destination);
-                whiteNoise.start();
-            } else if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-            isPlaying = true;
-            alert("Аудио-генератор запущен. Локальный шум дождя активирован.");
-        } else {
-            if (audioCtx) audioCtx.suspend();
-            isPlaying = false;
-        }
+        const audio = document.getElementById('ambient-sound');
+        if (!isPlaying) { audio.play(); isPlaying = true; alert("Звук дождя запущен."); } 
+        else { audio.pause(); isPlaying = false; }
     }
 
     function openImageViewer(element, isSvg = false) {
@@ -250,25 +164,21 @@
     }
 
     function renderSavedArticles() {
-        const container = document.getElementById('news-container');
-        container.innerHTML = ''; 
-        
+        const container = document.getElementById('news-container'); container.innerHTML = '';
         if (savedArticles.length === 0) {
             const defaultArt = createArticleHTML("МАНЬЯК ПРОДОЛЖАЕТ ИГРУ С ПОЛИЦИЕЙ", "Загадочные послания в почтовых ящиках заставили детективный отдел работать в удвоенном режиме. Преступник оставляет странные знаки, отсылающие к древним трактатам о грехах. Горожанам рекомендуется закрывать двери и сообщать прессе о любых подозрительных личностях у терминалов. Наш специальный портал внимательно следит за ходом следствия.", "", 0);
             container.appendChild(defaultArt);
         }
-        
         savedArticles.forEach((art, index) => { container.insertBefore(createArticleHTML(art.title, art.text, art.img, index), container.firstChild); });
         if (isAdmin) document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
     }
 
     function createNewArticle() {
         const title = document.getElementById('input-title'); const text = document.getElementById('input-text'); const img = document.getElementById('input-img');
-        if (!title.value.trim() || !text.value.trim()) return alert("Заполните поля статьи!");
+        if (!title.value.trim() || !text.value.trim()) return alert("Заполните поля!");
         const newArt = { title: title.value, text: text.value, img: img.value };
         savedArticles.push(newArt); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles));
-        renderSavedArticles();
-        title.value = ''; text.value = ''; img.value = '';
+        renderSavedArticles(); title.value = ''; text.value = ''; img.value = '';
     }
 
     function createArticleHTML(title, text, imgUrl, index) {
@@ -280,9 +190,9 @@
     }
 
     function deleteArticle(index) {
-        if(confirm("Удалить рапорт?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
+        if(confirm("Удалить?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
     }
-    createRain(); renderSavedArticles();
+    renderSavedArticles();
 </script>
 </body>
 </html>
