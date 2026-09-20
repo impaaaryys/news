@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -7,9 +6,6 @@
     <title>THE SUN SHINE - Детективный Портал</title>
     <style>
         body {
-            background: url('background.gif') no-repeat center center fixed;
-            background-size: cover;
-            background-color: #0b0c0d;
             color: #d1c7bd;
             font-family: 'Georgia', serif;
             margin: 0;
@@ -18,19 +14,43 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
+            background-color: #08090a;
         }
+        
+        /* Твое новое видео с каплями за стеклом на весь экран */
+        .video-background-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .video-background-container iframe {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100vw; height: 56.25vw;
+            min-height: 100vh; min-width: 177.77vh;
+            transform: translate(-50%, -50%);
+            opacity: 0.45; /* Затемняем видео для нуарного полумрака */
+            filter: blur(2px) contrast(105%); /* Легкое размытие */
+        }
+        
+        /* Плотная темная маска для идеальной читаемости текста */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 14, 18, 0.85);
+            background: linear-gradient(rgba(10, 14, 18, 0.75), rgba(5, 7, 9, 0.85));
             z-index: -1;
+            pointer-events: none;
         }
+        
         .audio-control-panel {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: #191b1d;
+            background: rgba(25, 27, 29, 0.95);
             border: 1px solid #4a3b32;
             padding: 12px;
             border-radius: 2px;
@@ -39,58 +59,102 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
         .audio-title { font-family: 'Courier New', monospace; font-size: 11px; color: #8c7664; font-weight: bold; }
+        
         .newspaper-container {
             width: 100%;
             max-width: 850px;
-            background: rgba(227, 218, 201, 0.94);
+            background: rgba(227, 218, 201, 0.94); /* Бумага слегка просвечивает дождь на фоне */
             color: #1c1a17;
             border: 1px solid #2b2520;
             padding: 35px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(255, 210, 150, 0.15);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 100px rgba(255, 210, 150, 0.12);
             box-sizing: border-box;
         }
-        .header-main { background: #b0233a; color: #fff; text-align: center; padding: 20px 10px; font-family: 'Impact', Arial, sans-serif; font-size: 50px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
+        
+        .theme-modern .header-main { background: #b0233a; color: #fff; }
+        .theme-modern .sub-header { border-color: #1c1a17; color: #3b352e; }
+        .theme-modern .article-headline { background: #262320; color: #e3dac9; border: none; }
+        .theme-modern .article-text-container { color: #1c1a17; }
+        .theme-modern .article-photo-box { background: #d4caa8; border-color: #262320; color: #1c1a17; }
+        
+        .theme-vintage { background: rgba(207, 194, 170, 0.94) !important; }
+        .theme-vintage .header-main { background: #382c21 !important; color: #cfc2aa !important; font-family: 'Times New Roman', serif !important; font-style: italic; }
+        .theme-vintage .sub-header { border-color: #382c21 !important; color: #4a3b2c; }
+        .theme-vintage .article-headline { background: #4a3b2c !important; color: #cfc2aa !important; font-family: 'Times New Roman', serif !important; }
+        .theme-vintage .article-text-container { color: #261f17; }
+        .theme-vintage .article-photo-box { background: #beaf96; border-color: #4a3b2c; color: #261f17; }
+
+        .header-main { text-align: center; padding: 20px 10px; font-family: 'Impact', Arial, sans-serif; font-size: 50px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; border: 1px solid rgba(0,0,0,0.1); }
         .sub-header { display: flex; justify-content: space-between; border-top: 2px solid #1c1a17; border-bottom: 2px solid #1c1a17; padding: 8px 5px; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 30px; font-family: 'Arial', sans-serif; }
-        .editor-box { background: rgba(0, 0, 0, 0.04); border: 1px dashed #4a3b2c; padding: 15px; margin-bottom: 30px; }
-        .editor-title { color: #262320; font-weight: bold; margin-bottom: 12px; font-size: 13px; font-family: 'Arial', sans-serif; text-transform: uppercase; }
-        input, textarea { width: 100%; padding: 8px; margin-bottom: 10px; background: #eae3d5; border: 1px solid #9c9181; color: #1c1a17; font-family: 'Georgia', serif; box-sizing: border-box; }
+        .editor-box { background: rgba(0, 0, 0, 0.04); border: 1px dashed #4a3b32; padding: 15px; margin-bottom: 30px; }
+        .editor-title { color: #262320; font-weight: bold; margin-bottom: 12px; font-size: 13px; font-family: 'Arial', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        
+        input, textarea, select { width: 100%; padding: 8px; margin-bottom: 10px; background: rgba(234, 227, 213, 0.9); border: 1px solid #9c9181; color: #1c1a17; font-family: 'Georgia', serif; box-sizing: border-box; }
+        input:focus, textarea:focus { outline: 1px solid #1c1a17; background: #fff; }
+        
         .btn { background: #262320; color: #e3dac9; border: 1px solid #1c1a17; padding: 8px 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-family: 'Arial', sans-serif; font-size: 12px; }
-        .btn:hover { background: #b0233a; color: #fff; }
+        .btn:hover { background: #b0233a; color: #fff; border-color: #b0233a; }
         .audio-btn { background: #2b2520; color: #d1c7bd; border: 1px solid #4a3b32; padding: 6px 12px; font-weight: bold; cursor: pointer; font-size: 11px; font-family: 'Courier New', monospace; }
+        .audio-btn:hover { background: #4a3b32; color: #fff; }
+        
         .news-feed { display: flex; flex-direction: column; gap: 35px; }
         .article { border-bottom: 1px solid rgba(28, 26, 23, 0.2); padding-bottom: 30px; position: relative; }
-        .article-headline { font-family: 'Impact', Arial, sans-serif; font-size: 24px; text-transform: uppercase; padding: 6px 12px; margin: 0 0 15px 0; letter-spacing: 1px; background: #262320; color: #e3dac9; }
+        .article-headline { font-family: 'Impact', Arial, sans-serif; font-size: 24px; text-transform: uppercase; padding: 6px 12px; margin: 0 0 15px 0; letter-spacing: 1px; }
         .article-body { display: flex; gap: 25px; }
-        .article-photo-box { width: 150px; min-width: 150px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.2); background: #d4caa8; }
+        
+        .article-photo-box { width: 150px; min-width: 150px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.2); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .article-img { width: 100%; height: 140px; object-fit: cover; border: 1px solid rgba(0,0,0,0.1); cursor: zoom-in; }
         .article-text-container { font-size: 15px; line-height: 1.6; text-align: justify; flex: 1; }
+        
         .delete-btn { display: none; position: absolute; right: 0; bottom: 5px; background: #b0233a; color: #fff; border: none; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: 'Arial', sans-serif; text-transform: uppercase; font-weight: bold; }
         .admin-trigger { color: rgba(255,255,255,0.15); font-size: 11px; cursor: pointer; margin-top: 50px; text-align: center; width: 100%; }
+        
+        .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 7, 10, 0.95); z-index: 10000; justify-content: center; align-items: center; cursor: zoom-out; opacity: 0; transition: opacity 0.25s ease; }
+        .image-viewer-modal.active { display: flex; opacity: 1; }
+        .modal-img { max-width: 90%; max-height: 85%; border: 2px solid #4a3b32; box-shadow: 0 0 30px rgba(0,0,0,0.8); object-fit: contain; }
+        .modal-caption { position: absolute; bottom: 40px; color: #8c7664; font-family: monospace; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<div class="audio-control-panel">
-    <div class="audio-title">DECT_AUDIO_REEL</div>
-    <audio id="ambient-sound" loop src="rain.mp3"></audio>
-    <button class="audio-btn" onclick="playAudio()">[ СИНХРОНИЗИРОВАТЬ ЗВУК ]</button>
+<!-- Контейнеры для двух разных плееров: один для фона, другой для атмосферной музыки -->
+<div class="video-background-container">
+    <div id="yt-bg-player"></div>
+    <div id="yt-audio-player" style="display:none;"></div>
 </div>
 
-<div class="newspaper-container">
-    <div class="header-main">THE SUN SHINE</div>
+<div class="image-viewer-modal" id="img-modal" onclick="closeImageViewer()">
+    <img class="modal-img" id="modal-target-img" src="" alt="Улика">
+    <div class="modal-caption">[ КЛИКНИТЕ ДЛЯ ЗАКРЫТИЯ ОКНА ]</div>
+</div>
+
+<div class="audio-control-panel">
+    <div class="audio-title">DECT_AUDIO_REEL</div>
+    <button class="audio-btn" onclick="toggleAudio()">[ СИНХРОНИЗИРОВАТЬ ЗВУК ]</button>
+</div>
+
+<div class="newspaper-container theme-modern" id="paper">
+    <div class="header-main" id="paper-logo">THE SUN SHINE</div>
     <div class="sub-header">
         <div>КРИМИНАЛЬНАЯ ХРОНИКА ГОРОДА</div>
         <div id="live-date">ДАТА: 20.09.2026</div>
-        <div>ВЕЧЕРНИЙ ВЫПУСК</div>
+        <div id="paper-style-title">ВЕЧЕРНИЙ ВЫПУСК</div>
     </div>
 
     <div class="editor-box">
         <div class="editor-title">Архив прессы и публикация</div>
+        <div style="margin-bottom: 12px;">
+            <select id="theme-selector" onchange="changePaperTheme()">
+                <option value="modern">Реалистичная газета (The Sun Shine)</option>
+                <option value="vintage">Ретро архив дел (Olden Times)</option>
+            </select>
+        </div>
         <input type="text" id="input-title" placeholder="ЗАГОЛОВОК СТАТЬИ / РАССПЛЕДОВАНИЯ...">
         <input type="text" id="input-img" placeholder="Ссылка на фото скриншота (оставь пустым для стандартного фоторобота)...">
-        <textarea id="input-text" placeholder="Введите текст детективной хроники..."></textarea>
+        <textarea id="input-text" placeholder="Введите текст детективной хроники или рапорта для печати..."></textarea>
         <button class="btn" onclick="createNewArticle()">Пустить в тираж</button>
     </div>
 
@@ -99,7 +163,7 @@
             <h2 class="article-headline">МАНЬЯК ПРОДОЛЖАЕТ ИГРУ С ПОЛИЦИЕЙ</h2>
             <div class="article-body">
                 <div class="article-photo-box">
-                    <svg width="90" height="120" viewBox="0 0 100 100" style="fill:#3a352e;"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg>
+                    <svg width="110" height="140" viewBox="0 0 100 100" style="fill:#3a352e; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg>
                     <div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">ФОТОРОБОТ</div>
                 </div>
                 <div class="article-text-container">
@@ -112,46 +176,96 @@
 
 <div class="admin-trigger" onclick="activateAdminMode()">[ ТЕХНИЧЕСКИЙ ДОСТУП РЕДАКТОРА ДЛЯ МОДЕРАЦИИ ]</div>
 
+<script src="https://youtube.com"></script>
 <script>
     const now = new Date();
     document.getElementById('live-date').textContent = "ДАТА: " + now.toLocaleDateString('ru-RU', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
     let savedArticles = JSON.parse(localStorage.getItem('real_news_articles')) || [];
     let isAdmin = false; const adminPin = "7777";
+    let bgPlayer, audioPlayer;
+    let isAudioPlaying = false;
 
-    let isPlaying = false;
-    function playAudio() {
-        const audio = document.getElementById('ambient-sound');
-        if (!isPlaying) { audio.play(); isPlaying = true; } 
-        else { audio.pause(); isPlaying = false; }
+    // Одновременный запуск двух видео: одно на фон (дождь), второе в тихий плеер (музыка)
+    function onYouTubeIframeAPIReady() {
+        // 1. Плеер для фона (Дождь за окном)
+        bgPlayer = new YT.Player('yt-bg-player', {
+            videoId: '2rksrmFvIPw', 
+            playerVars: { 'autoplay': 1, 'controls': 0, 'rel': 0, 'showinfo': 0, 'loop': 1, 'playlist': '2rksrmFvIPw', 'mute': 1, 'disablekb': 1 },
+            events: { 'onReady': function(e) { e.target.playVideo(); } }
+        });
+
+        // 2. Плеер для звука (Атмосферный трек DayZ)
+        audioPlayer = new YT.Player('yt-audio-player', {
+            videoId: 'AWZR81Dlr_o', 
+            playerVars: { 'autoplay': 0, 'controls': 0, 'rel': 0, 'showinfo': 0, 'loop': 1, 'playlist': 'AWZR81Dlr_o', 'disablekb': 1 },
+            events: { 'onReady': function(e) { e.target.setVolume(40); } }
+        });
+    }
+
+    // Включение музыки по клику
+    function toggleAudio() {
+        if (audioPlayer && audioPlayer.playVideo) {
+            if (!isAudioPlaying) {
+                audioPlayer.playVideo();
+                isAudioPlaying = true;
+                alert("Атмосферный саундтрек DayZ запущен в реальном времени.");
+            } else {
+                audioPlayer.pauseVideo();
+                isAudioPlaying = false;
+            }
+        }
+    }
+
+    function openImageViewer(element, isSvg = false) {
+        const modal = document.getElementById('img-modal'); const modalImg = document.getElementById('modal-target-img');
+        if (isSvg) { modalImg.src = "data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='200' height='250' viewBox='0 0 100 100' style='fill:%233a352e;'><circle cx='50' cy='35' r='20'/><path d='M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z'/></svg>"; } 
+        else { modalImg.src = element.src; }
+        modal.classList.add('active');
+    }
+
+    function closeImageViewer() { document.getElementById('img-modal').classList.remove('active'); }
+
+    function changePaperTheme() {
+        const selector = document.getElementById('theme-selector'); const paper = document.getElementById('paper'); const logo = document.getElementById('paper-logo'); const styleTitle = document.getElementById('paper-style-title');
+        if (selector.value === 'vintage') {
+            paper.className = 'newspaper-container theme-vintage'; logo.textContent = 'Olden Times'; styleTitle.textContent = 'АРХИВНЫЙ ДОКУМЕНТ';
+        } else {
+            paper.className = 'newspaper-container theme-modern'; logo.textContent = 'THE SUN SHINE'; styleTitle.textContent = 'ВЕЧЕРНИЙ ВЫПУСК';
+        }
     }
 
     function activateAdminMode() {
-        if (prompt("Код:") === adminPin) { isAdmin = true; document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block'); }
+        if (prompt("Код:") === adminPin) { isAdmin = true; alert("Доступ разрешен."); document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block'); }
     }
 
     function renderSavedArticles() {
         const container = document.getElementById('news-container');
         savedArticles.forEach((art, index) => { container.insertBefore(createArticleHTML(art.title, art.text, art.img, index), container.firstChild); });
+        if (isAdmin) document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
     }
 
     function createNewArticle() {
         const title = document.getElementById('input-title'); const text = document.getElementById('input-text'); const img = document.getElementById('input-img');
-        if (!title.value.trim() || !text.value.trim()) return alert("Заполните поля!");
+        if (!title.value.trim() || !text.value.trim()) return alert("Заполните заголовок и текст статьи!");
         const newArt = { title: title.value, text: text.value, img: img.value };
         savedArticles.push(newArt); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles));
-        location.reload();
+        const container = document.getElementById('news-container'); const newIndex = savedArticles.length - 1;
+        container.insertBefore(createArticleHTML(newArt.title, newArt.text, newArt.img, newIndex), container.firstChild);
+        if (isAdmin) document.getElementById('article-' + newIndex).querySelector('.delete-btn').style.display = 'block';
+        title.value = ''; text.value = ''; img.value = '';
     }
 
     function createArticleHTML(title, text, imgUrl, index) {
-        const articleDiv = document.createElement('div'); articleDiv.className = 'article';
-        let imgHTML = `<svg width="90" height="120" viewBox="0 0 100 100" style="fill:#3a352e;"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-weight:bold;">УЛИКА</div>`;
-        if (imgUrl && imgUrl.trim() !== '') { imgHTML = `<img src="${imgUrl}" style="width:100%; height:140px; object-fit:cover;">`; }
-        articleDiv.innerHTML = `<h2 class="article-headline">${title}</h2><div class="article-body"><div class="article-photo-box">${imgHTML}</div><div class="article-text-container">${text}</div></div><button class="delete-btn" onclick="deleteArticle(${index})">Удалить</button>`;
+        const articleDiv = document.createElement('div'); articleDiv.className = 'article'; articleDiv.id = 'article-' + index;
+        let imgHTML = `<svg width="110" height="140" viewBox="0 0 100 100" style="fill:#3a352e; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">УЛИКА</div>`;
+        if (imgUrl && imgUrl.trim() !== '') { imgHTML = `<img src="${imgUrl}" class="article-img" onclick="openImageViewer(this, false)" onerror="this.parentNode.innerHTML=this.parentNode.dataset.fallback;">`; }
+        articleDiv.innerHTML = `<h2 class="article-headline">${title}</h2><div class="article-body"><div class="article-photo-box" data-fallback='<svg width="110" height="140" viewBox="0 0 100 100" style="fill:#3a352e; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">УЛИКА</div>'>${imgHTML}</div><div class="article-text-container">${text}</div></div><button class="delete-btn" onclick="deleteArticle(${index})">Стереть из архива</button>`;
         return articleDiv;
     }
 
     function deleteArticle(index) {
-        savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload();
+        if(confirm("Удалить рапорт?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
     }
     renderSavedArticles();
 </script>
