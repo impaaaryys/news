@@ -163,28 +163,16 @@
         </div>
         <input type="text" id="input-title" placeholder="ЗАГОЛОВОК СТАТЬИ / РАССПЛЕДОВАНИЯ...">
         <input type="text" id="input-img" placeholder="Ссылка на фото скриншота (оставь пустым для стандартного фоторобота)...">
-        <textarea id="input-text" placeholder="Введите текст детективной хроники или рапорта для печати..."></textarea>
+        <textarea id="input-text" placeholder="Введите текст детективной хроники..."></textarea>
         <button class="btn" onclick="createNewArticle()">Пустить в тираж</button>
     </div>
 
     <div class="news-feed" id="news-container">
-        <div class="article">
-            <h2 class="article-headline">МАНЬЯК ПРОДОЛЖАЕТ ИГРУ С ПОЛИЦИЕЙ</h2>
-            <div class="article-body">
-                <div class="article-photo-box">
-                    <svg width="110" height="140" viewBox="0 0 100 100" style="fill:#262320; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg>
-                    <div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">ФОТОРОБОТ</div>
-                </div>
-                <div class="article-text-container">
-                    Загадочные послания в почтовых ящиках заставили детективный отдел работать в удвоенном режиме. Преступник оставляет странные знаки, отсылающие к древним трактатам о грехах. Горожанам рекомендуется закрывать двери и сообщать прессе о любых подозрительных личностях у терминалов. Наш специальный портал внимательно следит за ходом следствия.
-                </div>
-            </div>
-        </div>
+        <!-- Лента новостей заполняется скриптом -->
     </div>
 </div>
 
 <div class="admin-trigger" onclick="activateAdminMode()">[ ТЕХНИЧЕСКИЙ ДОСТУП РЕДАКТОРА ДЛЯ МОДЕРАЦИИ ]</div>
-
 <script>
     const now = new Date();
     document.getElementById('live-date').textContent = "ДАТА: " + now.toLocaleDateString('ru-RU', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -207,7 +195,7 @@
         }
     }
 
-    // Автономный генератор частот шума дождя (Web Audio API) - работает без внешних файлов
+    // Автономный генератор частот шума дождя (Web Audio API)
     let audioCtx = null;
     let isPlaying = false;
     function playAudio() {
@@ -223,7 +211,7 @@
                 whiteNoise.loop = true;
                 
                 let filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass'; filter.frequency.value = 400; // Глухой шум за окном
+                filter.type = 'lowpass'; filter.frequency.value = 400; 
                 
                 let gainNode = audioCtx.createGain();
                 gainNode.gain.value = 0.12; 
@@ -263,6 +251,13 @@
 
     function renderSavedArticles() {
         const container = document.getElementById('news-container');
+        container.innerHTML = ''; 
+        
+        if (savedArticles.length === 0) {
+            const defaultArt = createArticleHTML("МАНЬЯК ПРОДОЛЖАЕТ ИГРУ С ПОЛИЦИЕЙ", "Загадочные послания в почтовых ящиках заставили детективный отдел работать в удвоенном режиме. Преступник оставляет странные знаки, отсылающие к древним трактатам о грехах. Горожанам рекомендуется закрывать двери и сообщать прессе о любых подозрительных личностях у терминалов. Наш специальный портал внимательно следит за ходом следствия.", "", 0);
+            container.appendChild(defaultArt);
+        }
+        
         savedArticles.forEach((art, index) => { container.insertBefore(createArticleHTML(art.title, art.text, art.img, index), container.firstChild); });
         if (isAdmin) document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
     }
@@ -272,9 +267,7 @@
         if (!title.value.trim() || !text.value.trim()) return alert("Заполните поля статьи!");
         const newArt = { title: title.value, text: text.value, img: img.value };
         savedArticles.push(newArt); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles));
-        const container = document.getElementById('news-container'); const newIndex = savedArticles.length - 1;
-        container.insertBefore(createArticleHTML(newArt.title, newArt.text, newArt.img, newIndex), container.firstChild);
-        if (isAdmin) document.getElementById('article-' + newIndex).querySelector('.delete-btn').style.display = 'block';
+        renderSavedArticles();
         title.value = ''; text.value = ''; img.value = '';
     }
 
@@ -283,3 +276,13 @@
         let imgHTML = `<svg width="110" height="140" viewBox="0 0 100 100" style="fill:#24211e; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">УЛИКА</div>`;
         if (imgUrl && imgUrl.trim() !== '') { imgHTML = `<img src="${imgUrl}" class="article-img" onclick="openImageViewer(this, false)" onerror="this.parentNode.innerHTML=this.parentNode.dataset.fallback;">`; }
         articleDiv.innerHTML = `<h2 class="article-headline">${title}</h2><div class="article-body"><div class="article-photo-box" data-fallback='<svg width="110" height="140" viewBox="0 0 100 100" style="fill:#24211e; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#4a4135; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">УЛИКА</div>'>${imgHTML}</div><div class="article-text-container">${text}</div></div><button class="delete-btn" onclick="deleteArticle(${index})">Стереть из архива</button>`;
+        return articleDiv;
+    }
+
+    function deleteArticle(index) {
+        if(confirm("Удалить рапорт?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
+    }
+    createRain(); renderSavedArticles();
+</script>
+</body>
+</html>
