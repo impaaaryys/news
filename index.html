@@ -125,7 +125,7 @@
     <div class="physical-layer folder-umbrella" id="folder-umbrella">
         <div class="folder-inner-title" style="color:#00ffcc;"><span># ФАРМАКОЛОГИЯ: UMBRELLA CORP</span><button class="close-window-btn" onclick="closeWindow('folder-umbrella')">[ X ]</button></div>
         <div class="market-grid">
-            <div class="market-item"><div><div class="item-title">Стимулятор «Адреналин-X»</div><div class="item-desc typewriter-ready">Мгновенно блокирует эффекты ранений и ускоряет бег на 40 секунд.</div></div><div><div class="item-price">800 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Адреналин-X', 800)">Выкупить</button></div></div>
+            <div class="market-item"><div><div class="item-title">Стимулятор «Адреналин-X»</div><div class="item-desc typewriter-ready">Мгновенно блокирует эффекты ранений and ускоряет бег на 40 секунд.</div></div><div><div class="item-price">800 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Адреналин-X', 800)">Выкупить</button></div></div>
             <div class="market-item"><div><div class="item-title">Armored Rope</div><div class="item-desc typewriter-ready">Крепкий трос. Подходит для удушения целей или связывания пленных в подвале.</div></div><div><div class="item-price">120 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Армированную Веревку', 120)">Выкупить</button></div></div>
             <div class="market-item"><div><div class="item-title">Маска «Смайлер»</div><div class="item-desc typewriter-ready">Культовая маска банды. Полностью скрывает личность в базах данных Цербера.</div></div><div><div class="item-price">600 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Маску Смайлера', 600)">Выкупить</button></div></div>
             <div class="market-item"><div><div class="item-title">Свинцовый Кастет</div><div class="item-desc typewriter-ready">Анатомическая форма. Превращает любой удар кулаком в тяжелый нокаут.</div></div><div><div class="item-price">90 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Свинцовый Кастет', 90)">Выкупить</button></div></div>
@@ -137,12 +137,12 @@
     </div>
     <div class="physical-layer folder-rdm" id="window-cerberus" style="border-color: #ffaa00; display: none;">
         <div class="folder-inner-title" style="color: #ffaa00; border-color: #ffaa00;"><span>[ СЕТЕВОЙ ПЕРЕХВАТ: ЦЕРБЕРА-НЕТ ]</span><button class="close-window-btn" style="background: #ffaa00;" onclick="closeWindow('window-cerberus')">[ X ]</button></div>
-        <div style="font-size: 12px; color: #a1a1a1; line-height: 1.6;" class="typewriter-ready" id="cerberus-text-content">[LOG_14:22]: Секта заложила РП-комнату мучеников у старого депо. Стены покрыты знаками. МАРКЕР ДЛЯ ИГРЫ: ДЕПО_СЕКТА \n\n[CHAT_RESTORATION]: Admin_Dima: "Если они найдут лог Старка на сайте, то докопаются до паролей." \n\n[PASCHAL_INFO]: Кликни в центр верхней зоны стола и в левый нижний угол — там скрыты зашифрованные файлы.</div>
+        <div style="font-size: 12px; color: #a1a1a1; line-height: 1.6;" class="typewriter-ready" id="cerberus-text-content">[LOG_14:22]: Секта заложила РП-комнату мучеников у старого депо. Стены покрыты знаками. МАРКЕР ДЛЯ ИГРЫ: ДЕПО_СЕКТА <br><br>[CHAT_RESTORATION]: Admin_Dima: "Если они найдут лог Старка на сайте, то докопаются до паролей." <br><br>[PASCHAL_INFO]: Кликни в центр верхней зоны стола и в левый нижний угол — там скрыты зашифрованные файлы.</div>
     </div>
     <div class="physical-layer folder-umbrella" id="window-prisoner" style="border-color: #941c2f; display: none;">
         <div class="folder-inner-title" style="color: #ff3333; border-color: #941c2f;"><span>[ ОБЪЕКТ #03: ХОРРОР-НОВЕЛЛА ДОПРОСА ]</span><button class="close-window-btn" style="background: #941c2f;" onclick="closeWindow('window-prisoner')">[ X ]</button></div>
         <div style="display: flex; gap: 25px; width: 100%;">
-            <div class="ascii-art-frame">.---.<br>/     \<br>| () () |<br> \  ^  /<br>  |||||<br>  |||||<br>[ПЛЕННИК]</div>
+            <div class="ascii-art-frame">.---.<br>/     \<br>| () () |<br>   ^  <br>  |||||<br>  |||||<br>[ПЛЕННИК]</div>
             <div style="display: flex; flex-direction: column; gap: 15px; flex: 1;">
                 <div style="background: #000; border: 1px dashed #941c2f; padding: 10px; text-align: center;"><span id="prisoner-status" style="color: #ff0000; font-weight: bold; font-size: 12px; letter-spacing: 1px;">СТАТУС: МОЛЧИТ // ЗДОРОВЬЕ: 100%</span></div>
                 <div style="font-size: 12px; color: #8892b0; text-align: justify; min-height: 90px;" id="prisoner-log" class="typewriter-ready">Перед вами в сыром подвале привязан к железному стулу объект. Он тяжело дышит в темноте. Слышен стон железных балок здания сверху. Извлеките из него информацию для секты Manhunt, делая выбор ниже. Его судьба в ваших руках.</div>
@@ -235,10 +235,10 @@
 
     function updateAsciiArt(hp) {
         const artFrame = document.querySelector('.ascii-art-frame'); if (!artFrame) return;
-        if (hp > 75) { artFrame.innerHTML = ".---.<br>/     \\<br>| () () |<br> \\\\  ^  /<br>  |||||<br>  |||||<br> [ПЛЕННИК]"; } 
-        else if (hp <= 75 && hp > 35) { artFrame.innerHTML = " .---.<br>/ X X  \\<br>|  O   |<br> \\\\  ~  /<br>  |||||<br>  /|||\\\\\\<br>[ИЗБИТЫЙ]"; artFrame.style.color = "#ff3334"; } 
-        else if (hp <= 35 && hp > 0) { artFrame.innerHTML = "  ...  <br>/ - -  \\<br>|  #   |<br> \\\\  =  /<br>  /| |\\\\\\<br>  / | \\\\\\<br> [В МЯСО]"; artFrame.style.color = "#ff0000"; } 
-        else { artFrame.innerHTML = "  xxx  <br>/ x x  \\<br>|  *   |<br> \\\\ ___ /<br>  /   \\\\\\<br>  /   \\\\\\<br>  [ТРУП]"; artFrame.style.color = "#444"; }
+        if (hp > 75) { artFrame.innerHTML = ".---.<br>/     \\<br>| () () |<br>   ^  <br>  |||||<br>  |||||<br> [ПЛЕННИК]"; } 
+        else if (hp <= 75 && hp > 35) { artFrame.innerHTML = " .---.<br>/ X X  \\<br>|  O   |<br>   ~  <br>  |||||<br>  /|||\\\\\\<br>[ИЗБИТЫЙ]"; artFrame.style.color = "#ff3334"; } 
+        else if (hp <= 35 && hp > 0) { artFrame.innerHTML = "  ...  <br>/ - -  \\<br>|  #   |<br>   =  <br>  /| |\\\\\\<br>  / | \\\\\\<br> [В МЯСО]"; artFrame.style.color = "#ff0000"; } 
+        else { artFrame.innerHTML = "  xxx  <br>/ x x  \\<br>|  *   |<br>  ___ <br>  /   \\\\\\<br>  /   \\\\\\<br>  [ТРУП]"; artFrame.style.color = "#444"; }
     }
     function novelAction(type) {
         const status = document.getElementById('prisoner-status'); const log = document.getElementById('prisoner-log'); const ctrl = document.getElementById('novel-controls');
@@ -247,10 +247,11 @@
             pHP -= 20; updateAsciiArt(pHP); playSoundEffect('flesh'); setTimeout(() => playSoundEffect('scream'), 150);
             if (pHP <= 0) { status.textContent = "СТАТУС: МЕРТВ // СЕРДЦЕ ОСТАНОВИЛОСЬ"; log.innerHTML = "Объект скончался в судорогах от рваных ран железа. Вы переборщили с болью. Допрос сорван. Очистите комнату мучеников. Перезагрузите шлюз для доставки нового тела."; runTypewriterEffect(log); ctrl.innerHTML = ''; return; }
             status.textContent = `СТАТУС: ТРАВМЫ ПЛОТИ // ЗДОРОВЬЕ: ${pHP}%`;
-            if (pStage === 0) { pStage = 1; log.innerHTML = novelDialogs[1]; } 
-            else if (pStage === 1) { pStage = 2; log.innerHTML = novelDialogs[2]; } 
-            else if (pStage === 2) { pStage = 3; log.innerHTML = novelDialogs[3]; } 
-            else if (pStage === 3) { pHP = 0; updateAsciiArt(0); status.textContent = "СТАТУС: УБИТ С ПЕРЕДОЗИРОВКОЙ БОЛИ"; log.innerHTML = "Вы нанесли финальный удар кувалдой. Череп шпиона раскололся со страшным треском. Информации нет. Допрос полностью провален."; ctrl.innerHTML = ''; }
+            if (pStage === 0) { pStage = 1; } 
+            else if (pStage === 1) { pStage = 2; } 
+            else if (pStage === 2) { pStage = 3; } 
+            else if (pStage === 3) { pHP = 0; updateAsciiArt(0); status.textContent = "СТАТУС: УБИТ С ПЕРЕДОЗИРОВКОЙ БОЛИ"; log.innerHTML = "Вы нанесли финальный удар кувалдой. Череп шпиона раскололся со страшным треском. Информации нет. Допрос полностью провален."; ctrl.innerHTML = ''; return; }
+            log.innerHTML = novelDialogs[pStage];
             runTypewriterEffect(log);
         } else if (type === 'drug') {
             pHP = Math.min(100, pHP + 25); updateAsciiArt(pHP); playSoundEffect('flesh'); status.textContent = `СТАТУС: СТАБИЛИЗАЦИЯ ХИМИЕЙ // ЗДОРОВЬЕ: ${pHP}%`;
@@ -261,7 +262,7 @@
             playSoundEffect('step');
             if (pHP > 60) { log.innerHTML = "Вы медленно шагаете вокруг стула, скрежеща железом по полу. Но шпион Цербера лишь плюет вам под ноги: 'Твои дешевые угрозы на меня не работают, сектант. Я видел вещи истрашнее твоего подвала'. Его воля крепка, слова его не берут. Нужно сначала сломать его тело."; } 
             else if (pHP <= 60 && pHP > 20 && pStage === 2) {
-                pStage = 9; isInterrogated = true; playSoundEffect('iron'); status.textContent = "СТАТУС: СЛОМАН // ПОЛНЫЙ ЗВЕРЬ"; log.innerHTML = novelDialogs[9]; balance += 2500; updateUI(); ctrl.innerHTML = ''; alert("[УСПЕХ СИНДИКАТА]\n\nОбъект полностью сломан. +2500\$ зачислены на ваш баланс. РП-код получен.");
+                pStage = 9; isInterrogated = true; playSoundEffect('iron'); status.textContent = "СТАТУС: СЛОМАН // ПОЛНЫЙ ЗВЕРЬ"; log.innerHTML = novelDialogs[pStage]; balance += 2500; updateUI(); ctrl.innerHTML = ''; alert("[УСПЕХ СИНДИКАТА]\n\nОбъект полностью сломан. +2500\$ зачислены на ваш баланс. РП-код получен.");
             } else { log.innerHTML = "Вы пытаетесь говорить с ним, но он уже находится в полуобморочном состоянии и бредит. Он бормочет бессвязные слова и не понимает вопросов. Стабилизируйте его адреналином, чтобы вернуть в сознание."; }
             runTypewriterEffect(log);
         }
