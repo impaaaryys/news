@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE SUN SHINE - Детективный Портал</title>
     <style>
-        /* Атмосфера сырой, темной ночи в кабинете */
+        /* Мрачный фон сырого детективного кабинета */
         body {
-            background-color: #050709;
+            background-color: #06080a;
             background-image: radial-gradient(circle at center, #0e1317 0%, #030405 100%);
-            color: #a6988a;
+            color: #b2a190;
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 40px 20px;
@@ -17,96 +17,138 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            /* Симуляция далеких раскатов молний */
-            animation: lightning-flash 12s linear infinite;
         }
-        @keyframes lightning-flash {
-            0%, 92%, 94%, 100% { filter: brightness(1) contrast(100%); }
-            93% { filter: brightness(1.15) contrast(105%); }
-            95% { filter: brightness(1.2) contrast(110%); }
-        }
-        /* Живой эффект косого ливня на стекле прямо кодом */
-        .rain-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(255,255,255,0.04) 3px, transparent 3px),
-                        linear-gradient(110deg, rgba(255,255,255,0.02) 2px, transparent 2px);
-            background-size: 15px 300px;
-            z-index: 1;
-            pointer-events: none;
-            animation: css-rain 0.5s linear infinite;
-        }
-        @keyframes css-rain {
-            0% { background-position: 0px 0px; }
-            100% { background-position: 50px 900px; }
-        }
-        /* Тусклое, теплое свечение старой лампы на столе */
-        .lamp-light {
-            position: fixed;
-            top: -10%; left: 50%; width: 150vw; height: 130vh;
-            background: radial-gradient(circle at 50% 10%, rgba(230, 160, 90, 0.09) 0%, rgba(0,0,0,0) 60%);
-            transform: translateX(-50%); z-index: 2; pointer-events: none;
-        }
-        .audio-control-panel {
-            position: fixed;
-            bottom: 25px; right: 25px; background: #0b0d0e;
-            border: 1px solid #4a382c; padding: 12px; border-radius: 0;
-            z-index: 1000; display: flex; flex-direction: column; align-items: center; gap: 8px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.8), inset 0 0 5px rgba(0,0,0,0.5);
-        }
-        .audio-title { font-family: monospace; font-size: 11px; color: #695244; font-weight: bold; letter-spacing: 1px; }
         
-        /* Потертая, старая папка с обгоревшими краями и глубокими тенями */
+        /* Плотная папка газеты с текстурой пергамента и обгоревшим градиентом по краям */
         .newspaper-container {
-            width: 100%; max-width: 850px; 
+            width: 100%;
+            max-width: 850px; 
             background-color: #cbbeaa;
             background-image: radial-gradient(circle at center, #dfd0bb 20%, #b3a38f 100%);
             color: #14110e; 
-            border: 1px solid #1f1a14; padding: 45px;
+            border: 2px solid #1f1a14;
+            padding: 45px;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 
                         0 0 40px rgba(0,0,0,0.4),
-                        inset 0 0 100px rgba(54, 38, 25, 0.35); /* Эффект старения и грязи по углам */
-            position: relative; z-index: 10;
+                        inset 0 0 100px rgba(54, 38, 25, 0.4); /* Эффект грязи и копоти по углам */
+            position: relative;
+            box-sizing: border-box;
         }
-    </style>
-</head>
-<style>
-        .theme-modern .header-main { background: #73181f; color: #ebd4a8; border-bottom: 4px double #14110e; border-top: 4px double #14110e; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        .theme-modern .sub-header { border-color: #14110e; color: #29221a; font-family: 'Courier New', monospace; font-weight: bold; }
-        .theme-modern .article-headline { background: #1a1714; color: #dfd0bb; font-family: 'Impact', sans-serif; letter-spacing: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .theme-modern .article-photo-box { background: #ad9e87; border: 1px solid #14110e; box-shadow: inset 0 0 15px rgba(0,0,0,0.3); }
         
-        .theme-vintage { background-color: #b09e82 !important; background-image: radial-gradient(circle at center, #bead93 0%, #99876d 100%) !important; }
-        .theme-vintage .header-main { background: #241910 !important; color: #b09e82 !important; font-family: 'Times New Roman', serif !important; font-style: italic; }
-        .theme-vintage .sub-header { border-color: #241910 !important; color: #332316; }
-        .theme-vintage .article-headline { background: #332316 !important; color: #b09e82 !important; }
-
-        .header-main { text-align: center; padding: 22px 10px; font-size: 50px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; letter-spacing: 4px; }
-        .sub-header { display: flex; justify-content: space-between; border-top: 2px solid #14110e; border-bottom: 2px solid #14110e; padding: 10px 5px; font-size: 12px; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 1px; }
+        .header-main { 
+            text-align: center; 
+            padding: 22px 10px; 
+            font-size: 50px; 
+            text-transform: uppercase; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            letter-spacing: 4px;
+            background: #73181f; 
+            color: #ebd4a8; 
+            border-bottom: 4px double #14110e; 
+            border-top: 4px double #14110e;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .sub-header { 
+            display: flex; 
+            justify-content: space-between; 
+            border-top: 2px solid #14110e; 
+            border-bottom: 2px solid #14110e; 
+            padding: 10px 5px; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            margin-bottom: 40px; 
+            letter-spacing: 1px;
+            color: #29221a;
+            font-weight: bold;
+        }
         
         /* Блок рапорта стилизован под грубый картон архивного дела */
-        .editor-box { background: rgba(0, 0, 0, 0.06); border: 1px solid #3d3125; padding: 20px; margin-bottom: 40px; box-shadow: inset 0 0 20px rgba(0,0,0,0.08); }
-        .editor-title { color: #14110e; font-weight: bold; margin-bottom: 15px; font-size: 14px; text-transform: uppercase; border-bottom: 1px dashed #3d3125; padding-bottom: 6px; letter-spacing: 1px; }
+        .editor-box { 
+            background: rgba(0, 0, 0, 0.06); 
+            border: 1px solid #3d3125; 
+            padding: 20px; 
+            margin-bottom: 40px; 
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.08); 
+        }
         
-        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; background: rgba(227, 216, 197, 0.8); border: 1px solid #6b5c4b; color: #14110e; font-family: 'Courier New', monospace; font-weight: bold; box-sizing: border-box; font-size: 14px; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1); }
+        .editor-title { 
+            color: #14110e; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            border-bottom: 1px dashed #3d3125; 
+            padding-bottom: 6px; 
+            letter-spacing: 1px; 
+        }
+        input, textarea, select { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 12px; 
+            background: rgba(227, 216, 197, 0.8); 
+            border: 1px solid #6b5c4b; 
+            color: #14110e; 
+            font-family: 'Courier New', monospace; 
+            font-weight: bold; 
+            box-sizing: border-box; 
+            font-size: 14px; 
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1); 
+        }
         input:focus, textarea:focus { background: #fff; outline: 1px solid #14110e; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
         
-        .btn { background: #1a1714; color: #dfd0bb; border: 1px solid #14110e; padding: 12px 25px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); transition: all 0.2s; }
+        .btn { 
+            background: #1a1714; 
+            color: #dfd0bb; 
+            border: 1px solid #14110e; 
+            padding: 12px 25px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-size: 12px; 
+            letter-spacing: 1px; 
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2); 
+            transition: all 0.2s; 
+        }
         .btn:hover { background: #73181f; color: #fff; box-shadow: 0 4px 12px rgba(115, 24, 31, 0.4); }
-        .audio-btn { background: #171412; color: #a6988a; border: 1px solid #3d3125; padding: 8px 14px; font-weight: bold; cursor: pointer; font-size: 11px; font-family: monospace; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .audio-btn:hover { background: #2e261f; color: #fff; }
         
         .news-feed { display: flex; flex-direction: column; gap: 45px; }
         .article { border-bottom: 1px dashed rgba(20, 17, 14, 0.4); padding-bottom: 40px; position: relative; }
-        .article-headline { font-size: 24px; text-transform: uppercase; padding: 10px 18px; margin: 0 0 20px 0; }
+        .article-headline { 
+            font-size: 24px; 
+            text-transform: uppercase; 
+            padding: 10px 18px; 
+            margin: 0 0 20px 0; 
+            background: #1a1714; 
+            color: #dfd0bb; 
+            font-family: 'Impact', sans-serif; 
+            letter-spacing: 2px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
         .article-body { display: flex; gap: 25px; }
-        .article-photo-box { width: 150px; min-width: 150px; height: 185px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.2); box-shadow: 3px 3px 10px rgba(0,0,0,0.15); }
+        
+        .article-photo-box { 
+            width: 150px; 
+            min-width: 150px; 
+            height: 185px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 8px; 
+            box-sizing: border-box; 
+            border: 1px solid #14110e; 
+            background: #ad9e87; 
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+        }
+        
         .article-img { width: 100%; height: 140px; object-fit: cover; border: 1px solid rgba(0,0,0,0.15); cursor: zoom-in; }
         .article-text-container { font-size: 14.5px; line-height: 1.65; text-align: justify; flex: 1; font-family: 'Courier New', monospace; font-weight: bold; color: #14110e; }
         .delete-btn { display: none; position: absolute; right: 0; bottom: 5px; background: #73181f; color: #fff; border: none; padding: 5px 12px; font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .admin-trigger { color: rgba(255,255,255,0.06); font-size: 11px; cursor: pointer; margin-top: 50px; text-align: center; width: 100%; user-select: none; }
+        
         .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 4, 5, 0.98); z-index: 10000; justify-content: center; align-items: center; cursor: zoom-out; opacity: 0; }
         .image-viewer-modal.active { display: flex; opacity: 1; }
         .modal-img { max-width: 90%; max-height: 85%; border: 3px solid #241910; box-shadow: 0 0 50px rgba(0,0,0,0.95); }
@@ -114,45 +156,30 @@
     </style>
 </head>
 <body>
-<div class="rain-overlay"></div>
-<div class="lamp-light"></div>
 
 <div class="image-viewer-modal" id="img-modal" onclick="closeImageViewer()">
     <img class="modal-img" id="modal-target-img" src="" alt="Улика">
     <div class="modal-caption">[ НАЖМИТЕ ДЛЯ ЗАКРЫТИЯ ОКНА ]</div>
 </div>
 
-<div class="audio-control-panel">
-    <div class="audio-title">DECT_AUDIO_LOG</div>
-    <!-- Новый стабильный аудиопоток реалистичного ливня и грома с открытого сервера -->
-    <audio id="ambient-sound" loop src="https://soundjay.com"></audio>
-    <button class="audio-btn" onclick="playAudio()">[ СИНХРОНИЗИРОВАТЬ ЗВУК ]</button>
-</div>
-
-<div class="newspaper-container theme-modern" id="paper">
+<div class="newspaper-container" id="paper">
     <div class="header-main" id="paper-logo">THE SUN SHINE</div>
     <div class="sub-header">
         <div>СВОДКА КРИМИНАЛЬНЫХ ДЕЛ УГРО</div>
-        <div id="live-date">ДАТА: 20.09.2026</div>
+        <div id="live-date">ДАТА: 21.09.2026</div>
         <div id="paper-style-title">ВЕЧЕРНИЙ ТИРАЖ</div>
     </div>
 
     <div class="editor-box">
         <div class="editor-title">ДОСЬЕ ПУБЛИКАЦИИ / РАПОРТ ДЕТЕКТИВА</div>
-        <div style="margin-bottom: 12px;">
-            <select id="theme-selector" onchange="changePaperTheme()">
-                <option value="modern">Газетный разворот (The Sun Shine)</option>
-                <option value="vintage">Архивная папка КГБ (Olden Times)</option>
-            </select>
-        </div>
-        <input type="text" id="input-title" placeholder="ГРОМКОЕ НАЗВАНИЕ ДЕЛА / РАССПЛЕДОВАНИЯ...">
+        <input type="text" id="input-title" placeholder="ГРОМКОЕ НАЗВАНИЕ ДЕЛА / СТАТЬИ...">
         <input type="text" id="input-img" placeholder="Ссылка на скриншот улики с сервера (если пусто - будет силуэт)...">
         <textarea id="input-text" placeholder="Запишите сюда показания свидетелей, хронологию преступления или слухи..."></textarea>
         <button class="btn" onclick="createNewArticle()">Внести в номер</button>
     </div>
 
     <div class="news-feed" id="news-container">
-        <!-- Сюда вставляются рапорты -->
+        <!-- Рапорты -->
     </div>
 </div>
 
@@ -164,17 +191,6 @@
     let savedArticles = JSON.parse(localStorage.getItem('real_news_articles')) || [];
     let isAdmin = false; const adminPin = "7777";
 
-    let isPlaying = false;
-    function playAudio() {
-        const audio = document.getElementById('ambient-sound');
-        if (!isPlaying) { 
-            audio.play().then(() => {
-                isPlaying = true;
-                alert("Аудиоканал запущен. Звук реалистичного ливня и раскатов грома активен.");
-            }).catch(err => alert("Кликните еще раз по странице, браузер блокирует старт."));
-        } else { audio.pause(); isPlaying = false; }
-    }
-
     function openImageViewer(element, isSvg = false) {
         const modal = document.getElementById('img-modal'); const modalImg = document.getElementById('modal-target-img');
         if (isSvg) { modalImg.src = "data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='200' height='250' viewBox='0 0 100 100' style='fill:%231a1714;'><circle cx='50' cy='35' r='20'/><path d='M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z'/></svg>"; } 
@@ -183,15 +199,6 @@
     }
 
     function closeImageViewer() { document.getElementById('img-modal').classList.remove('active'); }
-
-    function changePaperTheme() {
-        const selector = document.getElementById('theme-selector'); const paper = document.getElementById('paper'); const logo = document.getElementById('paper-logo'); const styleTitle = document.getElementById('paper-style-title');
-        if (selector.value === 'vintage') {
-            paper.className = 'newspaper-container theme-vintage'; logo.textContent = 'Olden Times'; styleTitle.textContent = 'АРХИВНЫЙ ДОКУМЕНТ';
-        } else {
-            paper.className = 'newspaper-container theme-modern'; logo.textContent = 'THE SUN SHINE'; styleTitle.textContent = 'ВЕЧЕРНИЙ ТИРАЖ';
-        }
-    }
 
     function activateAdminMode() {
         if (prompt("СЛУЖЕБНЫЙ КОД:") === adminPin) { isAdmin = true; alert("Режим чистки включен."); document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block'); }
@@ -223,9 +230,8 @@
         return articleDiv;
     }
 
-    // Фикс удаления — теперь листы не дублируются
     function deleteArticle(index) {
-        if(confirm("Удалить рапорт за НонРП?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
+        if(confirm("Удалить рапорт?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
     }
     renderSavedArticles();
 </script>
