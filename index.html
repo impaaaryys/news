@@ -3,237 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE SUN SHINE - Детективный Портал</title>
+    <title>[ VALIANT VIDEO - REBORN ]</title>
     <style>
-        /* Мрачный фон сырого детективного кабинета */
         body {
-            background-color: #06080a;
-            background-image: radial-gradient(circle at center, #0e1317 0%, #030405 100%);
-            color: #b2a190;
+            background-color: #030304;
+            color: #a30000; /* Кроваво-красный Manhunt */
             font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden; position: relative;
         }
-        
-        /* Плотная папка газеты с текстурой пергамента и обгоревшим градиентом по краям */
-        .newspaper-container {
-            width: 100%;
-            max-width: 850px; 
-            background-color: #cbbeaa;
-            background-image: radial-gradient(circle at center, #dfd0bb 20%, #b3a38f 100%);
-            color: #14110e; 
-            border: 2px solid #1f1a14;
-            padding: 45px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 
-                        0 0 40px rgba(0,0,0,0.4),
-                        inset 0 0 100px rgba(54, 38, 25, 0.4); /* Эффект грязи и копоти по углам */
-            position: relative;
-            box-sizing: border-box;
+        body::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            z-index: 9999; background-size: 100% 4px, 6px 100%; pointer-events: none;
         }
-        
-        .header-main { 
-            text-align: center; 
-            padding: 22px 10px; 
-            font-size: 50px; 
-            text-transform: uppercase; 
-            margin-bottom: 5px; 
-            font-weight: bold; 
-            letter-spacing: 4px;
-            background: #73181f; 
-            color: #ebd4a8; 
-            border-bottom: 4px double #14110e; 
-            border-top: 4px double #14110e;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        .vhs-noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 8px; background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 0 15px rgba(255,255,255,0.08); z-index: 9998; pointer-events: none; animation: scratch 5s linear infinite;
         }
-        
-        .sub-header { 
-            display: flex; 
-            justify-content: space-between; 
-            border-top: 2px solid #14110e; 
-            border-bottom: 2px solid #14110e; 
-            padding: 10px 5px; 
-            font-size: 12px; 
-            text-transform: uppercase; 
-            margin-bottom: 40px; 
-            letter-spacing: 1px;
-            color: #29221a;
-            font-weight: bold;
+        @keyframes scratch { 0% { top: -10px; } 100% { top: 100vh; } }
+
+        /* Жуткий дисклеймер на весь экран при входе */
+        .disclaimer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 100000; display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
         }
-        
-        /* Блок рапорта стилизован под грубый картон архивного дела */
-        .editor-box { 
-            background: rgba(0, 0, 0, 0.06); 
-            border: 1px solid #3d3125; 
-            padding: 20px; 
-            margin-bottom: 40px; 
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.08); 
+        .disclaimer-box {
+            max-width: 600px; padding: 30px; border: 2px solid #a30000; background: #070809;
+            box-shadow: 0 0 35px rgba(163, 0, 0, 0.4); text-align: center;
         }
-        
-        .editor-title { 
-            color: #14110e; 
-            font-weight: bold; 
-            margin-bottom: 15px; 
-            font-size: 14px; 
-            text-transform: uppercase; 
-            border-bottom: 1px dashed #3d3125; 
-            padding-bottom: 6px; 
-            letter-spacing: 1px; 
+        .disclaimer-text { color: #8a8a8a; font-size: 13px; line-height: 1.6; text-align: justify; margin-bottom: 20px; }
+
+        /* Главный VHS Монитор */
+        .monitor {
+            width: 100%; max-width: 950px; background: #07080a; border: 2px solid #540000;
+            padding: 20px; box-shadow: 0 0 35px rgba(84, 0, 0, 0.4); box-sizing: border-box;
         }
-        input, textarea, select { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 12px; 
-            background: rgba(227, 216, 197, 0.8); 
-            border: 1px solid #6b5c4b; 
-            color: #14110e; 
-            font-family: 'Courier New', monospace; 
-            font-weight: bold; 
-            box-sizing: border-box; 
-            font-size: 14px; 
-            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1); 
+        .monitor-header { display: flex; justify-content: space-between; border-bottom: 1px solid #540000; padding-bottom: 10px; margin-bottom: 15px; font-size: 13px; font-weight: bold; }
+        .rec-signal { color: #ff0000; animation: blink 1s steps(2, start) infinite; }
+        @keyframes blink { to { visibility: hidden; } }
+
+        /* Верхнее меню переключения РП-вкладок (НЕ отдельные страницы!) */
+        .tabs-menu { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px dashed #540000; padding-bottom: 15px; }
+        .tab-btn {
+            background: #120305; border: 1px solid #540000; color: #7a6e6e;
+            padding: 10px 20px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase;
         }
-        input:focus, textarea:focus { background: #fff; outline: 1px solid #14110e; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+        .tab-btn:hover, .tab-btn.active { background: #4a0004; color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+
+        /* Системные контейнеры вкладок */
+        .tab-content { display: none; }
+        .tab-content.active { display: flex; gap: 20px; }
         
-        .btn { 
-            background: #1a1714; 
-            color: #dfd0bb; 
-            border: 1px solid #14110e; 
-            padding: 12px 25px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-transform: uppercase; 
-            font-size: 12px; 
-            letter-spacing: 1px; 
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2); 
-            transition: all 0.2s; 
-        }
-        .btn:hover { background: #73181f; color: #fff; box-shadow: 0 4px 12px rgba(115, 24, 31, 0.4); }
+        /* Стили для Камер */
+        .camera-list { flex: 1; background: #020303; border: 1px solid #240003; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+        .cam-btn { background: #0b0d0e; border: 1px solid #4a0000; color: #574e4e; padding: 8px; text-align: left; cursor: pointer; font-family: inherit; font-size: 11px; }
+        .cam-btn:hover, .cam-btn.active { background: #260002; color: #ff0000; }
+        .screen-view { flex: 2.5; background: #010202; border: 1px solid #4a0000; height: 350px; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: inset 0 0 30px #000; }
+        .static-glitch { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 1px, transparent 1px, transparent 2px); opacity: 0; pointer-events: none; z-index: 5; }
+        .static-glitch.active { opacity: 1; animation: glitch-f 0.1s infinite; }
+        @keyframes glitch-f { 0% { background-position: 0 0; } 100% { background-position: 5px 30px; } }
+    </style>
+</head>
+<style>
+        /* Стили Черного Рынка (Твои товары) */
+        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
+        .market-item { background: #0a0b0d; border: 1px solid #4a0000; padding: 15px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+        .item-title { font-weight: bold; color: #ff0000; font-size: 14px; margin-bottom: 5px; }
+        .item-desc { color: #7a7070; font-size: 11px; line-height: 1.4; margin-bottom: 10px; }
+        .item-price { font-family: monospace; font-size: 12px; color: #ecc94b; margin-bottom: 10px; }
         
-        .news-feed { display: flex; flex-direction: column; gap: 45px; }
-        .article { border-bottom: 1px dashed rgba(20, 17, 14, 0.4); padding-bottom: 40px; position: relative; }
-        .article-headline { 
-            font-size: 24px; 
-            text-transform: uppercase; 
-            padding: 10px 18px; 
-            margin: 0 0 20px 0; 
-            background: #1a1714; 
-            color: #dfd0bb; 
-            font-family: 'Impact', sans-serif; 
-            letter-spacing: 2px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+        /* Стили Базы Данных и формы загрузки фото */
+        .db-layout { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        .upload-form { background: #0a0b0d; border: 1px dashed #540000; padding: 15px; }
+        .form-title { font-size: 12px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
+        input[type="text"], textarea { width: 100%; background: #020202; border: 1px solid #4a0000; color: #ff0000; padding: 8px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box; }
+        input[type="file"] { margin-bottom: 12px; color: #7a6e6e; font-size: 12px; }
         
-        .article-body { display: flex; gap: 25px; }
+        .records-list { display: flex; flex-direction: column; gap: 20px; }
+        .record-card { background: #060708; border: 1px solid #360003; padding: 15px; display: flex; gap: 20px; position: relative; }
+        .record-photo-frame { width: 120px; min-width: 120px; height: 150px; border: 1px solid #4a0000; background: #020202; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .record-img { width: 100%; height: 100%; object-fit: cover; }
+        .record-text { font-size: 12px; line-height: 1.5; flex: 1; color: #9c9191; }
         
-        .article-photo-box { 
-            width: 150px; 
-            min-width: 150px; 
-            height: 185px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 8px; 
-            box-sizing: border-box; 
-            border: 1px solid #14110e; 
-            background: #ad9e87; 
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
-        }
-        
-        .article-img { width: 100%; height: 140px; object-fit: cover; border: 1px solid rgba(0,0,0,0.15); cursor: zoom-in; }
-        .article-text-container { font-size: 14.5px; line-height: 1.65; text-align: justify; flex: 1; font-family: 'Courier New', monospace; font-weight: bold; color: #14110e; }
-        .delete-btn { display: none; position: absolute; right: 0; bottom: 5px; background: #73181f; color: #fff; border: none; padding: 5px 12px; font-size: 11px; cursor: pointer; text-transform: uppercase; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .admin-trigger { color: rgba(255,255,255,0.06); font-size: 11px; cursor: pointer; margin-top: 50px; text-align: center; width: 100%; user-select: none; }
-        
-        .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 4, 5, 0.98); z-index: 10000; justify-content: center; align-items: center; cursor: zoom-out; opacity: 0; }
-        .image-viewer-modal.active { display: flex; opacity: 1; }
-        .modal-img { max-width: 90%; max-height: 85%; border: 3px solid #241910; box-shadow: 0 0 50px rgba(0,0,0,0.95); }
-        .modal-caption { position: absolute; bottom: 40px; color: #695244; font-family: monospace; font-size: 12px; }
+        .btn { background: #240205; color: #a30000; border: 1px solid #a30000; padding: 8px 16px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .btn:hover { background: #a30000; color: #000; box-shadow: 0 0 10px #a30000; }
+        .buy-btn { width: 100%; }
+        .delete-btn { position: absolute; right: 10px; bottom: 10px; border-color: #ff3366; color: #ff3366; background: transparent; font-size: 10px; padding: 2px 6px; cursor: pointer; font-family: inherit; }
+        .delete-btn:hover { background: #ff3366; color: #000; }
     </style>
 </head>
 <body>
 
-<div class="image-viewer-modal" id="img-modal" onclick="closeImageViewer()">
-    <img class="modal-img" id="modal-target-img" src="" alt="Улика">
-    <div class="modal-caption">[ НАЖМИТЕ ДЛЯ ЗАКРЫТИЯ ОКНА ]</div>
-</div>
+<div class="vhs-noise"></div>
 
-<div class="newspaper-container" id="paper">
-    <div class="header-main" id="paper-logo">THE SUN SHINE</div>
-    <div class="sub-header">
-        <div>СВОДКА КРИМИНАЛЬНЫХ ДЕЛ УГРО</div>
-        <div id="live-date">ДАТА: 21.09.2026</div>
-        <div id="paper-style-title">ВЕЧЕРНИЙ ТИРАЖ</div>
-    </div>
-
-    <div class="editor-box">
-        <div class="editor-title">ДОСЬЕ ПУБЛИКАЦИИ / РАПОРТ ДЕТЕКТИВА</div>
-        <input type="text" id="input-title" placeholder="ГРОМКОЕ НАЗВАНИЕ ДЕЛА / СТАТЬИ...">
-        <input type="text" id="input-img" placeholder="Ссылка на скриншот улики с сервера (если пусто - будет силуэт)...">
-        <textarea id="input-text" placeholder="Запишите сюда показания свидетелей, хронологию преступления или слухи..."></textarea>
-        <button class="btn" onclick="createNewArticle()">Внести в номер</button>
-    </div>
-
-    <div class="news-feed" id="news-container">
-        <!-- Рапорты -->
+<!-- ДИСКЛЕЙМЕР НА ВХОДЕ -->
+<div class="disclaimer-overlay" id="disclaimer">
+    <div class="disclaimer-box">
+        <div style="color:#ff0000; font-weight:bold; font-size:18px; margin-bottom:15px; letter-spacing:2px;">[ СИСТЕМНОЕ ПРЕДУПРЕЖДЕНИЕ ШЛЮЗА ]</div>
+        <div class="disclaimer-text">
+            ВНИМАНИЕ: Данный веб-ресурс стилизован под подпольную сеть (Darknet) вселенной видеоигры Manhunt. Весь публикуемый здесь контент, включая описания товаров, профили жертв, заказы на устранение и материалы уголовных дел, является стопроцентным вымыслом, создан исключительно в рамках текстовой ролевой игры (РП) и не имеет никакого отношения к реальному миру, незаконной деятельности или настоящим криминальным структурам. Заходя в терминал, вы подтверждаете ознакомление с правилами песочницы.
+        </div>
+        <button class="btn" onclick="closeDisclaimer()">ПОДТВЕРДИТЬ ПОДКЛЮЧЕНИЕ</button>
     </div>
 </div>
 
-<div class="admin-trigger" onclick="activateAdminMode()">[ СЛУЖЕБНЫЙ ВХОД ДЛЯ МОДЕРАЦИИ ПРЕССЫ ]</div>
+<div class="monitor">
+    <div class="monitor-header">
+        <div>[ VALIANT_DARKNET_NODE_v7 ]</div>
+        <div class="rec-signal">● LIVE_FEED</div>
+    </div>
+
+    <!-- ВЕРХНИЕ КНОПКИ ВКЛАДОК (ПЕРЕКЛЮЧАЮТ КОНТЕНТ БЕЗ ПЕРЕХОДОВ СТРАНИЦ) -->
+    <div class="tabs-menu">
+        <button class="tab-btn active" onclick="switchTab('tab-cams')">01. Камеры слежения</button>
+        <button class="tab-btn" onclick="switchTab('tab-market')">02. Черный рынок</button>
+        <button class="tab-btn" onclick="switchTab('tab-database')">03. База данных улик</button>
+    </div>
+    <!-- ВКЛАДКА 1: КАМЕРЫ СЛЕЖЕНИЯ -->
+    <div class="tab-content active" id="tab-cams">
+        <div class="camera-list">
+            <button class="cam-btn active" onclick="switchCamera('01', 'ALLEYWAY // НАБЛЮДЕНИЕ ЗА ОБЪЕКТОМ АКТИВНО')">CAM_01: ALLEY</button>
+            <button class="cam-btn" onclick="switchCamera('02', 'ABANDONED MALL // ДАТЧИКИ ДВИЖЕНИЯ СРАБОТАЛИ')">CAM_02: MALL</button>
+            <button class="cam-btn" onclick="switchCamera('03', 'JUNKYARD // ТЕМНАЯ ЗОНА ОХОТНИКОВ')">CAM_03: YARD</button>
+            <div style="margin-top:auto;">
+                <button class="btn" style="width:100%; font-size:10px;" onclick="toggleHorrorAudio()">[ СИНХРОНИЗАЦИЯ ШУМА ]</button>
+            </div>
+        </div>
+        <div class="screen-view">
+            <div class="static-glitch" id="screen-glitch"></div>
+            <div style="position:absolute; opacity:0.1; z-index:2;">
+                <svg width="200" height="200" viewBox="0 0 100 100" style="fill:#4a0000;"><path d="M50 15 L20 85 L80 85 Z"/></svg>
+            </div>
+            <div class="screen-text" id="view-text" style="color:#525c5c; font-size:16px;">ALLEYWAY // НАБЛЮДЕНИЕ ЗА ОБЪЕКТОМ АКТИВНО</div>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 2: ЧЕРНЫЙ РЫНОК (МАГАЗИН ТОВАРОВ) -->
+    <div class="tab-content" id="tab-market">
+        <div class="market-grid">
+            <div class="market-item">
+                <div>
+                    <div class="item-title">Полицейский Сканнер [УЗЕЛ]</div>
+                    <div class="item-desc">Перехватывает текстовые логи патрульных копов в радиусе 100 метров. Позволяет уходить от облав заранее.</div>
+                </div>
+                <div>
+                    <div class="item-price">Цена: 450 NCoin</div>
+                    <button class="btn buy-btn" onclick="alert('Заказ оформлен. Ожидайте курьера в тайнике.')">Купить актив</button>
+                </div>
+            </div>
+            <div class="market-item">
+                <div>
+                    <div class="item-title">Тяжелая Отмычка Цербера</div>
+                    <div class="item-desc">Армейский инструмент. Позволяет вскрывать двери запертых квартир без присутствия владельца за 3 секунды.</div>
+                </div>
+                <div>
+                    <div class="item-price">Цена: 200 NCoin</div>
+                    <button class="btn buy-btn" onclick="alert('Заказ оформлен. Ожидайте курьера в тайнике.')">Купить актив</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 3: БАЗА ДАННЫХ (ФОРМА СОЗДАНИЯ СУДНЫХ ДЕЛ С ЗАГРУЗКОЙ ФОТО) -->
+    <div class="tab-content" id="tab-database">
+        <div class="db-layout">
+            <div class="upload-form">
+                <div class="form-title">// ВНЕСТИ НОВЫЙ СЛИВ / ДОСЬЕ НА ЦЕЛЬ</div>
+                <input type="text" id="db-input-title" placeholder="ИМЯ ЖЕРТВЫ / НАЗВАНИЕ ДЕЛА...">
+                <textarea id="db-input-text" placeholder="Укажите грехи цели, место обитания или ориентировку..."></textarea>
+                
+                <label style="font-size:11px; display:block; margin-bottom:5px; color:#7a6e6e;">ПРИКРЕПИТЬ СНИМОК УЛИКИ / ФОТОРОБОТ:</label>
+                <!-- Инпут загрузки картинки напрямую с компьютера -->
+                <input type="file" id="db-input-file" accept="image/*">
+                
+                <button class="btn" onclick="addNewRecord()">Внести запись в реестр</button>
+            </div>
+
+            <div class="records-list" id="records-container">
+                <!-- Сюда падают карточки дел -->
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-    const now = new Date();
-    document.getElementById('live-date').textContent = "ДАТА: " + now.toLocaleDateString('ru-RU', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    let savedArticles = JSON.parse(localStorage.getItem('real_news_articles')) || [];
-    let isAdmin = false; const adminPin = "7777";
+    function closeDisclaimer() { document.getElementById('disclaimer').style.opacity = '0'; setTimeout(() => document.getElementById('disclaimer').style.display = 'none', 500); }
 
-    function openImageViewer(element, isSvg = false) {
-        const modal = document.getElementById('img-modal'); const modalImg = document.getElementById('modal-target-img');
-        if (isSvg) { modalImg.src = "data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='200' height='250' viewBox='0 0 100 100' style='fill:%231a1714;'><circle cx='50' cy='35' r='20'/><path d='M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z'/></svg>"; } 
-        else { modalImg.src = element.src; }
-        modal.classList.add('active');
+    // Логика переключения РП-вкладок (без перезагрузки страниц)
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
     }
 
-    function closeImageViewer() { document.getElementById('img-modal').classList.remove('active'); }
-
-    function activateAdminMode() {
-        if (prompt("СЛУЖЕБНЫЙ КОД:") === adminPin) { isAdmin = true; alert("Режим чистки включен."); document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block'); }
+    function switchCamera(camId, text) {
+        document.querySelectorAll('.cam-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        const glitch = document.getElementById('screen-glitch');
+        glitch.classList.add('active');
+        setTimeout(() => { document.getElementById('view-text').textContent = text; glitch.classList.remove('active'); }, 200);
     }
 
-    function renderSavedArticles() {
-        const container = document.getElementById('news-container'); container.innerHTML = '';
-        if (savedArticles.length === 0) {
-            const defaultArt = createArticleHTML("МАНЬЯК ПРОДОЛЖАЕТ ИГРУ С ПОЛИЦИЕЙ", "Загадочные послания в почтовых ящиках заставили детективный отдел работать в удвоенном режиме. Преступник оставляет странные знаки, отсылающие к древним трактатам о грехах. Горожанам рекомендуется закрывать двери и сообщать прессе о любых подозрительных личностях у терминалов. Наш специальный портал внимательно следит за ходом следствия.", "", 0);
-            container.appendChild(defaultArt);
-        }
-        savedArticles.forEach((art, index) => { container.insertBefore(createArticleHTML(art.title, art.text, art.img, index), container.firstChild); });
-        if (isAdmin) document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
+    // Загрузка сохраненных РП-дел с ГАРАНТИРОВАННОЙ поддержкой локальных фото (Base64)
+    let savedRecords = JSON.parse(localStorage.getItem('darknet_records')) || [];
+
+    function renderRecords() {
+        const container = document.getElementById('records-container'); container.innerHTML = '';
+        savedRecords.forEach((rec, index) => {
+            const card = document.createElement('div'); card.className = 'record-card';
+            let imgHTML = `<svg width="50" height="50" viewBox="0 0 100 100" style="fill:#2b0004;"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg>`;
+            if (rec.image) { imgHTML = `<img src="${rec.image}" class="record-img">`; }
+            card.innerHTML = `<div class="record-photo-frame">${imgHTML}</div><div class="record-text"><div style="color:#ff0000; font-weight:bold; font-size:14px; margin-bottom:5px;">ДЕСКРИПТОР: ${rec.title}</div><div>${rec.text}</div></div><button class="delete-btn" onclick="deleteRecord(${index})">Удалить</button>`;
+            container.insertBefore(card, container.firstChild);
+        });
     }
 
-    function createNewArticle() {
-        const title = document.getElementById('input-title'); const text = document.getElementById('input-text'); const img = document.getElementById('input-img');
-        if (!title.value.trim() || !text.value.trim()) return alert("Заполните рапорт полностью!");
-        const newArt = { title: title.value, text: text.value, img: img.value };
-        savedArticles.push(newArt); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles));
-        renderSavedArticles(); title.value = ''; text.value = ''; img.value = '';
+    // Умный скрипт чтения локального фото через FileReader
+    function addNewRecord() {
+        const title = document.getElementById('db-input-title').value.trim();
+        const text = document.getElementById('db-input-text').value.trim();
+        const fileInput = document.getElementById('db-input-file');
+        if (!title || !text) return alert("Заполните досье цели полностью!");
+
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                saveData(title, text, e.target.result); // Сохраняем фото в виде текстового кода в LocalStorage
+            };
+            reader.readAsDataURL(file);
+        } else { saveData(title, text, null); }
     }
 
-    function createArticleHTML(title, text, imgUrl, index) {
-        const articleDiv = document.createElement('div'); articleDiv.className = 'article'; articleDiv.id = 'article-' + index;
-        let imgHTML = `<svg width="110" height="140" viewBox="0 0 100 100" style="fill:#1a1714; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#3d3125; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">УЛИКА</div>`;
-        if (imgUrl && imgUrl.trim() !== '') { imgHTML = `<img src="${imgUrl}" class="article-img" onclick="openImageViewer(this, false)" onerror="this.parentNode.innerHTML=this.parentNode.dataset.fallback;">`; }
-        articleDiv.innerHTML = `<h2 class="article-headline">${title}</h2><div class="article-body"><div class="article-photo-box" data-fallback='<svg width="110" height="140" viewBox="0 0 100 100" style="fill:#1a1714; cursor:pointer;" onclick="openImageViewer(this, true)"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg><div style="font-size:10px; color:#3d3125; text-align:center; margin-top:5px; font-family:sans-serif; font-weight:bold;">УЛИКА</div>'>${imgHTML}</div><div class="article-text-container">${text}</div></div><button class="delete-btn" onclick="deleteArticle(${index})">Стереть из архива</button>`;
-        return articleDiv;
+    function saveData(title, text, imageData) {
+        savedRecords.push({ title: title, text: text, image: imageData });
+        localStorage.setItem('darknet_records', JSON.stringify(savedRecords));
+        renderRecords();
+        document.getElementById('db-input-title').value = ''; document.getElementById('db-input-text').value = ''; document.getElementById('db-input-file').value = '';
     }
 
-    function deleteArticle(index) {
-        if(confirm("Удалить рапорт?")) { savedArticles.splice(index, 1); localStorage.setItem('real_news_articles', JSON.stringify(savedArticles)); location.reload(); }
+    function deleteRecord(index) { if (confirm("Стереть досье из реестра синдиката?")) { savedRecords.splice(index, 1); localStorage.setItem('darknet_records', JSON.stringify(savedRecords)); renderRecords(); } }
+
+    // Генератор жуткого аналогового шума Manhunt кодом
+    let aCtx = null;
+    function toggleHorrorAudio() {
+        if (!aCtx) {
+            aCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let osc = aCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.value = 45;
+            let filter = aCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 100;
+            let gain = aCtx.createGain(); gain.gain.value = 0.12;
+            osc.connect(filter); filter.connect(gain); gain.connect(aCtx.destination); osc.start();
+            alert("Аудио-шлюз активен. Давящий гул запущен.");
+        } else if (aCtx.state === 'suspended') { aCtx.resume(); } else { aCtx.suspend(); }
     }
-    renderSavedArticles();
+    renderRecords();
 </script>
 </body>
 </html>
