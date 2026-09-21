@@ -49,6 +49,23 @@
             position: relative; box-sizing: border-box; background: rgba(10, 12, 15, 0.3);
             border: 1px solid #1c0303;
         }
+                .theme-modern .header-main { 
+            background: #241d14 !important; 
+            color: #12100e !important; 
+            text-align: center; 
+            padding: 25px 10px; 
+            font-family: 'Times New Roman', serif !important; 
+            font-weight: bold !important;
+            font-style: italic !important;
+            font-size: 48px; 
+            letter-spacing: 6px; 
+            text-transform: uppercase; 
+            margin-bottom: 5px; 
+            border-bottom: 4px double #12100e !important; 
+            border-top: 4px double #12100e !important;
+            text-shadow: none !important;
+        }
+
         .physical-layer {
             position: absolute; width: 850px; min-height: 600px; padding: 40px;
             box-sizing: border-box; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), left 0.5s, top 0.5s, z-index 0.1s;
@@ -191,6 +208,26 @@
                     <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Строительная Кувалда', 450)">Выкупить</button>
                 </div>
             </div>
+                        <div class="market-item">
+                <div>
+                    <div class="item-title">Пластиковый Пакет [Черный]</div>
+                    <div class="item-desc">Инструмент для бесшумных удушений 1-го уровня. Идеально маскирует лицо жертвы, исключая крики и брызги крови. Одноразовый.</div>
+                </div>
+                <div>
+                    <div class="item-price">30 $</div>
+                    <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Пластиковый Пакет', 30)">Выкупить</button>
+                </div>
+            </div>
+            <div class="market-item">
+                <div>
+                    <div class="item-title">Стальной Серп [Потертый]</div>
+                    <div class="item-desc">Острое сельскохозяйственное лезвие. Позволяет проводить жестокие рубящие казни в ближнем бою. Наносит рваные раны.</div>
+                </div>
+                <div>
+                    <div class="item-price">280 $</div>
+                    <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Стальной Серп', 280)">Выкупить</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -213,6 +250,33 @@
             </div>
             <div class="market-item">
                 <div>
+                                <!-- ДИЛЕР 3: SMSMILE SECURITY -->
+            <div style="margin-top: 25px; border-top: 1px dashed #00ffcc; padding-top: 20px;">
+                <div class="shop-brand-title" style="color:#00ffcc; border-color:#00ffcc;"># КОНТРАБАНДА: SMSMILE SECURITY [СНАРЯЖЕНИЕ]</div>
+                <div class="market-grid">
+                    <div class="market-item">
+                        <div>
+                            <div class="item-title">Фарфоровая Маска «Смайлер»</div>
+                            <div class="item-desc">Культовая маска банды. Полностью скрывает личность в базах данных Цербера. Повышает авторитет среди уличных психопатов.</div>
+                        </div>
+                        <div>
+                            <div class="item-price">600 $</div>
+                            <button class="btn" style="border-color:#00ffcc;" onclick="processPurchase('Маску Смайлера', 600)">Выкупить</button>
+                        </div>
+                    </div>
+                    <div class="market-item">
+                        <div>
+                            <div class="item-title">Тяжелый Свинцовый Кастет</div>
+                            <div class="item-desc">Анатомическая форма под пальцы. Превращает любой удар кулаком в дробящий выстрел. Идеально для уличных драк у терминалов.</div>
+                        </div>
+                        <div>
+                            <div class="item-price">90 $</div>
+                            <button class="btn" style="border-color:#00ffcc;" onclick="processPurchase('Свинцовый Кастет', 90)">Выкупить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                     <div class="item-title">Armored Rope</div>
                     <div class="item-desc">Крепкий трос. Подходит для удушения целей или связывания пленных в подвале.</div>
                 </div>
@@ -332,6 +396,36 @@
     function openViewer(el) { const m = document.getElementById('img-modal'); document.getElementById('modal-target-img').src = el.src; m.classList.add('active'); }
 
     updateUI(); renderRecords();
+        // =======================================================
+    // ТОЧЕЧНЫЙ АПГРЕЙД: ГЕНЕРАТОР СЛУЧАЙНЫХ КРИМИНАЛЬНЫХ ХРОНИК
+    // =======================================================
+    function generateRandomRPNews() {
+        const newsContainer = document.querySelector('.news-feed');
+        if (!newsContainer) return;
+        
+        const rumors = [
+            "Местные патрульные Цербера обнаружили три пустые кассеты со следами крови в районе Junkyard. Режиссер объявил награду за поимку оператора.",
+            "Банда Смайлеров устроила засаду на конвой Umbrella Corp. Похищены экспериментальные партии стимуляторов 'Адреналин-X'. В городе объявлено чрезвычайное положение.",
+            "На подпольных рынках Карцера зафиксирован резкий скачок цен на строительные кувалды. Охотники массово скупают тяжелый инструмент перед ночным рейдом.",
+            "Анонимный информатор слил координаты нового тайника RDM Supply в переулках коммерческого района. Копы уже выехали на оцепление зоны."
+        ];
+        
+        const randomRumor = rumors[Math.floor(Math.random() * rumors.length)];
+        
+        const extraArticle = document.createElement('div');
+        extraArticle.className = 'article';
+        extraArticle.innerHTML = `
+            <div class="article-headline" style="background:#241d14; color:#ebd4a8; border-color:#12100e;">ЭКСТРЕННОЕ СООБЩЕНИЕ ИЗ СЕТИ</div>
+            <div class="article-body">
+                <div class="article-text" style="font-style: italic;">
+                    // ПЕРЕХВАТ ЭФИРА: "${randomRumor}" // Следите за своими кошельками и проверяйте углы комнат.
+                </div>
+            </div>
+        `;
+        newsContainer.appendChild(extraArticle);
+    }
+    generateRandomRPNews();
+
 
     // ==========================================
     // ТОЧЕЧНЫЙ АПГРЕЙД: СИСТЕМА DRAG & DROP (ОКНА)
