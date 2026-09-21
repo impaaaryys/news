@@ -3,373 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ VALIANT VIDEO ENTERTAINMENT - UNDERGROUND SYSTEM ]</title>
+    <title>[ VALIANT VIDEO ENTERTAINMENT - LOG TERMINAL ]</title>
     <style>
         body {
-            background-color: #020304;
-            background-image: radial-gradient(circle at center, #0a0d12 0%, #010203 100%);
-            color: #800000;
+            background: url('https://unsplash.com') no-repeat center center fixed;
+            background-size: cover;
+            color: #a30000;
             font-family: 'Courier New', Courier, monospace;
             margin: 0; padding: 0;
             display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; overflow-x: hidden; position: relative;
+            min-height: 100vh; overflow: hidden; position: relative;
             user-select: none;
         }
         body::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-            z-index: 99999; background-size: 100% 4px, 6px 100%; pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.6) 50%), 
+                        linear-gradient(90deg, rgba(163, 0, 0, 0.04), rgba(0, 255, 255, 0.01), rgba(163, 0, 0, 0.03));
+            z-index: 99999; background-size: 100% 6px, 6px 100%; pointer-events: none;
         }
         .vhs-noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 12px; background: rgba(255, 255, 255, 0.02);
-            box-shadow: 0 0 20px rgba(255,255,255,0.05); z-index: 99998; pointer-events: none; animation: scratch 4s linear infinite;
+            position: fixed; top: 0; left: 0; width: 100%; height: 15px; background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 0 30px rgba(255,255,255,0.06); z-index: 99998; pointer-events: none; animation: vhs-scratch 5s linear infinite;
         }
-        @keyframes scratch { 0% { top: -20px; } 100% { top: 100vh; } }
+        @keyframes vhs-scratch { 0% { top: -20px; } 100% { top: 100vh; } }
         .disclaimer-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 1000000; display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.6s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            transition: opacity 0.5s ease;
         }
         .disclaimer-box {
-            max-width: 650px; padding: 40px; border: 2px solid #540000; background: #050607;
-            box-shadow: 0 0 50px rgba(163, 0, 0, 0.3), inset 0 0 20px #000; text-align: center;
+            max-width: 650px; padding: 40px; border: 2px solid #a30000; background: #050506;
+            box-shadow: 0 0 50px rgba(163, 0, 0, 0.4), inset 0 0 30px #000; text-align: center;
         }
-        .disclaimer-text { color: #736c6c; font-size: 13px; line-height: 1.6; text-align: justify; margin-bottom: 25px; }
+        .disclaimer-text { color: #6e6767; font-size: 13px; line-height: 1.6; text-align: justify; margin-bottom: 25px; }
         .terminal-info-bar {
-            width: 100%; max-width: 1050px; padding: 15px 20px; background: rgba(5, 7, 10, 0.9);
-            border-bottom: 2px solid #4a0000; box-sizing: border-box; display: flex;
+            width: 100%; padding: 15px 25px; background: rgba(5, 7, 12, 0.92);
+            border-bottom: 2px solid #540000; box-sizing: border-box; display: flex;
             justify-content: space-between; font-size: 12px; font-weight: bold; letter-spacing: 1px;
-            z-index: 50; position: relative; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+            z-index: 50; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.9);
         }
         .rec-signal { color: #ff0000; animation: blink 1s steps(2, start) infinite; }
         @keyframes blink { to { visibility: hidden; } }
-        .desktop-table {
-            width: 100%; max-width: 1050px; min-height: 750px; margin-top: 20px;
-            position: relative; box-sizing: border-box; background: rgba(10, 12, 15, 0.3);
-            border: 1px solid #1c0303;
-        }
-                .theme-modern .header-main { 
-            background: #241d14 !important; 
-            color: #12100e !important; 
-            text-align: center; 
-            padding: 25px 10px; 
-            font-family: 'Times New Roman', serif !important; 
-            font-weight: bold !important;
-            font-style: italic !important;
-            font-size: 48px; 
-            letter-spacing: 6px; 
-            text-transform: uppercase; 
-            margin-bottom: 5px; 
-            border-bottom: 4px double #12100e !important; 
-            border-top: 4px double #12100e !important;
-            text-shadow: none !important;
-        }
-
-        .physical-layer {
-            position: absolute; width: 850px; min-height: 600px; padding: 40px;
-            box-sizing: border-box; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), left 0.5s, top 0.5s, z-index 0.1s;
-            box-shadow: 5px 15px 40px rgba(0,0,0,0.8);
-        }
-        .folder-tab-trigger {
-            position: absolute; background: #260205; border: 1px solid #540000;
-            color: #8f8282; font-family: inherit; font-size: 11px; font-weight: bold;
-            padding: 8px 15px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.5); transition: all 0.2s; z-index: 5;
-        }
-        .folder-tab-trigger:hover { color: #ff0000; background: #3d0003; box-shadow: 0 0 10px #ff0000; }
-        .btn { background: #240205; color: #ff3333; border: 1px solid #a30000; padding: 10px 20px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .btn:hover { background: #a30000; color: #000; box-shadow: 0 0 12px #ff0000; }
+        .desktop-table { width: 100vw; height: calc(100vh - 46px); position: relative; box-sizing: border-box; padding: 30px; }
+        .desktop-shortcut-grid { position: absolute; left: 30px; top: 40px; display: flex; flex-direction: column; gap: 25px; z-index: 5; }
+        .shortcut-icon { display: flex; flex-direction: column; align-items: center; width: 90px; text-align: center; cursor: pointer; gap: 8px; transition: all 0.2s; }
+        .shortcut-icon svg { fill: #a30000; filter: drop-shadow(0 0 5px rgba(163,0,0,0.4)); transition: all 0.2s; }
+        .shortcut-icon:hover svg { fill: #ff0000; filter: drop-shadow(0 0 12px #ff0000); transform: scale(1.05); }
+        .shortcut-label { color: #8c8080; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 4px #000; }
+        .shortcut-icon:hover .shortcut-label { color: #ff0000; }
     </style>
 </head>
 <style>
+        .physical-layer {
+            position: absolute; width: 800px; min-height: 550px; padding: 30px;
+            box-sizing: border-box; border-radius: 2px; display: none;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.95), 0 0 30px rgba(0,0,0,0.5);
+        }
+        .physical-layer.active { display: block; }
         .layer-newspaper {
-            background-color: #c2b5a3;
-            background-image: radial-gradient(circle at center, #ebdcc7 0%, #a89b87 100%);
-            color: #12100e; border: 2px solid #2e261f;
-            left: 100px; top: 60px; z-index: 20;
+            background-color: #c2b4a0; background-image: radial-gradient(circle at center, #ebd9c1 0%, #9c8e7a 100%);
+            color: #12100e; border: 2px solid #241c15; left: 250px; top: 60px; z-index: 100;
         }
-        .newspaper-title { text-align: center; padding: 15px; font-size: 45px; font-family: 'Impact', sans-serif; text-transform: uppercase; letter-spacing: 4px; background: #73181f; color: #ebd4a8; border: 2px solid #14110e; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .newspaper-sub { display: flex; justify-content: space-between; border-top: 2px solid #12100e; border-bottom: 2px solid #12100e; padding: 8px 5px; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 5px; margin-bottom: 25px; }
-        .news-feed { display: flex; flex-direction: column; gap: 30px; }
-        .article { border-bottom: 1px dashed rgba(18, 16, 14, 0.4); padding-bottom: 20px; }
-        .article-headline { font-size: 20px; font-weight: bold; text-transform: uppercase; margin: 0 0 12px 0; border-left: 4px solid #73181f; padding-left: 10px; }
+        .newspaper-title { text-align: center; padding: 15px; font-size: 42px; font-family: 'Times New Roman', serif; font-style: italic; font-weight: bold; text-transform: uppercase; letter-spacing: 5px; background: #241d14; color: #ebd4a8; border: 2px solid #12100e; }
+        .newspaper-sub { display: flex; justify-content: space-between; border-top: 2px solid #12100e; border-bottom: 2px solid #12100e; padding: 6px 5px; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 5px; margin-bottom: 25px; }
+        .news-feed { display: flex; flex-direction: column; gap: 25px; }
+        .article { border-bottom: 1px dashed rgba(18, 16, 14, 0.35); padding-bottom: 20px; }
+        .article-headline { font-size: 20px; font-weight: bold; text-transform: uppercase; margin: 0 0 12px 0; border-left: 5px solid #241d14; padding-left: 12px; }
         .article-body { display: flex; gap: 20px; }
-        .article-photo-frame { width: 130px; min-width: 130px; height: 160px; border: 1px solid #12100e; background: #a19382; display: flex; align-items: center; justify-content: center; }
-        .article-text { font-size: 13.5px; line-height: 1.5; text-align: justify; font-family: 'Courier New', monospace; font-weight: bold; }
-        .folder-rdm {
-            background: #141619; border: 2px solid #ff3333; color: #e2e8f0;
-            left: 20px; top: 120px; z-index: 10; transform: scale(0.92) rotate(-2deg);
-        }
-        .folder-umbrella {
-            background: #111113; border: 2px solid #00ffcc; color: #e2e8f0;
-            left: 180px; top: 20px; z-index: 5; transform: scale(0.92) rotate(3deg);
-        }
-        .folder-database {
-            background: #0d0e0f; border: 2px solid #ecc94b; color: #cbd5e1;
-            left: 90px; top: 180px; z-index: 3; transform: scale(0.92) rotate(-1deg);
-        }
-        .physical-layer.extracted {
-            z-index: 100 !important;
-            transform: scale(1) rotate(0deg) !important;
-            left: 100px !important; top: 40px !important;
-            box-shadow: 0 35px 90px rgba(0,0,0,0.95), 0 0 30px rgba(163,0,0,0.2);
-        }
-        .folder-inner-title { font-size: 16px; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid inherit; padding-bottom: 8px; margin-bottom: 20px; letter-spacing: 2px; display: flex; justify-content: space-between; }
-        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .market-item { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
-        .folder-rdm .market-item { border-color: #3b0d11; }
-        .folder-umbrella .market-item { border-color: #0b3c36; }
-        .item-title { font-weight: bold; font-size: 14px; margin-bottom: 6px; letter-spacing: 1px; }
-        .folder-rdm .item-title { color: #ff3333; } .folder-umbrella .item-title { color: #00ffcc; }
-        .item-desc { color: #8892b0; font-size: 11.5px; line-height: 1.4; text-align: justify; margin-bottom: 12px; }
-        .item-price { font-size: 13px; color: #ecc94b; font-weight: bold; margin-bottom: 10px; }
-        .close-folder-btn { background: transparent; border: 1px solid inherit; color: inherit; padding: 2px 8px; cursor: pointer; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .close-folder-btn:hover { background: #fff; color: #000; }
-        .db-layout { display: flex; flex-direction: column; gap: 15px; }
-        input[type="text"], textarea { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 10px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box; }
-        .folder-database input, .folder-database textarea { border-color: #ecc94b; color: #ecc94b; }
-        .records-container { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
-        .record-card { background: rgba(0,0,0,0.5); border: 1px solid #332a15; padding: 15px; display: flex; gap: 15px; position: relative; }
-        .photo-frame { width: 110px; min-width: 110px; height: 140px; border: 1px solid #ecc94b; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .article-photo-frame { width: 130px; min-width: 130px; height: 160px; border: 1px solid #12100e; background: #968875; display: flex; align-items: center; justify-content: center; }
+        .article-text { font-size: 13px; line-height: 1.55; text-align: justify; font-family: 'Courier New', monospace; font-weight: bold; }
+        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .market-item { background: rgba(2, 3, 4, 0.9); padding: 15px; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; box-sizing: border-box; }
+        .folder-rdm { background: #0b0d0f; border: 2px solid #b31924; color: #cbd5e1; left: 300px; top: 120px; z-index: 90; }
+        .folder-umbrella { background: #070809; border: 2px solid #00a383; color: #cbd5e1; left: 350px; top: 160px; z-index: 80; }
+        .folder-database { background: #050607; border: 2px solid #bfa13b; color: #cbd5e1; left: 400px; top: 200px; z-index: 70; }
+        .folder-inner-title { font-size: 14px; font-weight: bold; text-transform: uppercase; padding-bottom: 8px; margin-bottom: 20px; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid inherit; }
+        .folder-rdm .market-item { border: 1px solid #4a0d11; } .folder-umbrella .market-item { border: 1px solid #0b3c34; }
+        .item-title { font-weight: bold; font-size: 13px; margin-bottom: 6px; }
+        .folder-rdm .item-title { color: #ff3344; } .folder-umbrella .item-title { color: #00ffcc; }
+        .item-desc { color: #94a3b8; font-size: 11.5px; line-height: 1.45; text-align: justify; margin-bottom: 12px; }
+        .item-price { font-size: 13px; color: #ecc94b; font-weight: bold; margin-bottom: 10px; font-family: monospace; }
+        .close-window-btn { background: #a30000; color: #000; border: none; padding: 4px 10px; cursor: pointer; font-size: 11px; font-weight: bold; font-family: monospace; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        .close-window-btn:hover { background: #ff0000; color: #fff; box-shadow: 0 0 10px #ff0000; }
+        .folder-umbrella .close-window-btn { background: #00a383; } .folder-umbrella .close-window-btn:hover { background: #00ffcc; }
+        .folder-database .close-window-btn { background: #bfa13b; } .folder-database .close-window-btn:hover { background: #ecc94b; }
+        .db-layout { display: flex; flex-direction: column; gap: 12px; }
+        input[type="text"], textarea { width: 100%; background: #010102; border: 1px solid #444; color: #fff; padding: 10px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box; font-size: 13px; }
+        .folder-database input, .folder-database textarea { border-color: #bfa13b; color: #ecc94b; }
+        .records-container { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .record-card { background: rgba(1,2,3,0.8); border: 1px solid #473813; padding: 15px; display: flex; gap: 15px; position: relative; }
+        .photo-frame { width: 110px; min-width: 110px; height: 140px; border: 1px solid #bfa13b; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .record-img { width: 100%; height: 100%; object-fit: cover; }
-        .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2,3,5,0.98); z-index: 100000; justify-content: center; align-items: center; cursor: zoom-out; }
-        .image-viewer-modal.active { display: flex; }
-        .modal-img { max-width: 90%; max-height: 85%; border: 2px solid #540000; }
+        .btn { background: #1a0103; color: #ff3333; border: 1px solid #a30000; padding: 8px 18px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 11px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .btn:hover { background: #a30000; color: #000; }
+        .image-viewer-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1,2,3,0.99); z-index: 100000; justify-content: center; align-items: center; cursor: zoom-out; opacity: 0; }
+        .image-viewer-modal.active { display: flex; opacity: 1; } .modal-img { max-width: 90%; max-height: 85%; border: 2px solid #a30000; }
+        .modal-caption { position: absolute; bottom: 40px; color: #695244; font-family: monospace; font-size: 12px; }
     </style>
 </head>
 <body>
 <div class="vhs-noise"></div>
-<div class="image-viewer-modal" id="img-modal" onclick="this.classList.remove('active')">
-    <img class="modal-img" id="modal-target-img" src="" alt="Материалы">
-</div>
+<div class="image-viewer-modal" id="img-modal" onclick="this.classList.remove('active')"><img class="modal-img" id="modal-target-img" src="" alt="Материалы"></div>
 <div class="disclaimer-overlay" id="disclaimer">
     <div class="disclaimer-box">
-        <div style="color:#ff0000; font-weight:bold; font-size:18px; margin-bottom:15px; letter-spacing:2px;">[ ВНИМАНИЕ: ПОДКЛЮЧЕНИЕ К КАНАЛУ СИНДИКАТА ]</div>
-        <div class="disclaimer-text">
-            ДАННЫЙ ВЕБ-РЕСУРС ЯВЛЯЕТСЯ СТИЛИЗОВАННЫМ ИНТЕРФЕЙСОМ ДЛЯ ТЕКСТОВОЙ РОЛЕВОЙ ИГРЫ (РП) ПО СЕТТИНГУ MANHUNT. Все папки дел, контрабандное оружие, описания казней и денежный баланс являются чистым вымыслом и игровой условностью песочницы. Нажмите кнопку ниже для развертывания подпольного терминала на вашем мониторе.
-        </div>
+        <div style="color:#a30000; font-weight:bold; font-size:18px; margin-bottom:15px; letter-spacing:2px;">[ ВНИМАНИЕ: ТЕРМИНАЛ VALIANT VIDEO ]</div>
+        <div class="disclaimer-text">ДАННЫЙ ВЕБ-РЕСУРС ЯВЛЯЕТСЯ СТИЛИЗОВАННЫМ ИНТЕРФЕЙСОМ ДЛЯ ТЕКСТОВОЙ РОЛЕВОЙ ИГРЫ (РП) ПО СЕТТИНГУ MANHUNT. Все папки дел, контрабандное оружие, описания казней и денежный баланс являются чистым вымыслом и игровой условностью песочницы. Нажмите кнопку ниже для развертывания подпольного терминала на вашем мониторе.</div>
         <button class="btn" onclick="initSystemAudio()">ЗАПУСТИТЬ ТЕРМИНАЛ</button>
     </div>
 </div>
 <div class="terminal-info-bar">
-    <div>УЗЕЛ: VALIANT_UNDERGROUND_NODE_v11</div>
-    <div style="color:#ecc94b;">СЧЕТ В СЕТИ: <span id="user-crypto-balance">5000</span> $</div>
+    <div>СЕТЬ: VALIANT_STARK_SYSTEM_v12</div>
+    <div style="color:#ecc94b;">КРИПТО-СЧЕТ: <span id="user-crypto-balance">5000</span> $</div>
     <div class="rec-signal">● СВЯЗЬ ЗАКРЫТА</div>
 </div>
 <div class="desktop-table">
-    <button class="folder-tab-trigger" style="left: 100px; top: 22px; border-color:#2e261f; background:#ebdcc7; color:#12100e;" onclick="extractLayer('layer-newspaper')">01. Газета Хроник</button>
-    <div class="physical-layer layer-newspaper" id="layer-newspaper">
-        <div class="newspaper-title">THE SUN SHINE</div>
-        <div class="newspaper-sub">
-            <div>КРИМИНАЛЬНЫЕ СВОДКИ ШТАТА</div>
-            <div>ДАТА: 21.09.2026</div>
-            <div>ВЕЧЕРНИЙ ТИРАЖ</div>
+    <div class="desktop-shortcut-grid">
+        <div class="shortcut-icon" onclick="openWindow('layer-newspaper')">
+            <svg width="45" height="45" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 16H6c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v12c0 .55-.45 1-1 1zM7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></svg>
+            <div class="shortcut-label">01. Сводки</div>
         </div>
+        <div class="shortcut-icon" onclick="openWindow('folder-rdm')">
+            <svg width="45" height="45" viewBox="0 0 24 24"><path d="M22 2H2v20h20V2zm-2 18H4V4h16v16zM6 7h12v2H6zm0 4h12v2H6zm0 4h8v2H6z"/></svg>
+            <div class="shortcut-label">02. Синдикат RDM</div>
+        </div>
+        <div class="shortcut-icon" onclick="openWindow('folder-umbrella')">
+            <svg width="45" height="45" viewBox="0 0 24 24"><path d="M4.5 10.5C3.67 10.5 3 11.17 3 12s.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5h-15z M10.5 4.5C10.5 3.67 11.17 3 12 3s1.5.67 1.5 1.5v15c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-15z"/></svg>
+            <div class="shortcut-label">03. Umbrella</div>
+        </div>
+        <div class="shortcut-icon" onclick="openWindow('folder-database')">
+            <svg width="45" height="45" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            <div class="shortcut-label">04. Архив Улик</div>
+        </div>
+    </div>
+    <div class="physical-layer layer-newspaper" id="layer-newspaper">
+        <div class="folder-inner-title" style="color:#12100e; border-bottom:1px solid #12100e;"><span>ГАЗЕТНЫЙ ЛИСТ СВОДОК</span><button class="close-window-btn" style="background:#241d14; color:#fff;" onclick="closeWindow('layer-newspaper')">[ X ]</button></div>
+        <div class="newspaper-title">THE SUN SHINE</div>
+        <div class="newspaper-sub"><div>КРИМИНАЛЬНЫЕ СВОДКИ ШТАТА</div><div>ДАТА: 21.09.2026</div><div>ВЕЧЕРНИЙ ТИРАЖ</div></div>
         <div class="news-feed">
             <div class="article">
                 <div class="article-headline">ОХОТНИКИ ВЫШЛИ НА УЛИЦЫ ГОРОДА</div>
                 <div class="article-body">
-                    <div class="article-photo-frame">
-                        <svg width="80" height="110" viewBox="0 0 100 100" style="fill:#12100e;"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg>
-                    </div>
-                    <div class="article-text">
-                        Подпольный синдикат Valiant Video развернул сеть скрытых камер слежения в заброшенных промзонах. Режиссер Старк объявил о начале новой охоты. Всем жителям рекомендуется забаррикадировать двери. Городские патрули полиции не контролируют спальные кварталы. Следите за обновлениями архивных папок на столе.
-                    </div>
+                    <div class="article-photo-frame"><svg width="60" height="90" viewBox="0 0 100 100" style="fill:#12100e;"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg></div>
+                    <div class="article-text">Подпольный синдикат Valiant Video развернул сеть скрытых камер слежения в заброшенных промзонах. Режиссер Старк объявил о начале новой охоты. Всем жителям рекомендуется забаррикадировать двери. Кликайте по иконкам приложений на столе допросной, чтобы развернуть папки.</div>
                 </div>
             </div>
         </div>
     </div>
-
-    <button class="folder-tab-trigger" style="left: 20px; top: 82px; border-color:#ff3366; color:#ff3366;" onclick="extractLayer('folder-rdm')">02. Магазин RDM</button>
     <div class="physical-layer folder-rdm" id="folder-rdm">
-        <div class="folder-inner-title" style="border-color:#ff3333; color:#ff3333;">
-            <span># КОНТРАБАНДА: RDM SUPPLY [ИНСТРУМЕНТЫ]</span>
-            <button class="close-folder-btn" style="border-color:#ff3333;" onclick="retractLayer('folder-rdm')">Убрать на стол X</button>
-        </div>
+        <div class="folder-inner-title" style="color:#ff3344;"><span># КОНТРАБАНДА: RDM SUPPLY</span><button class="close-window-btn" onclick="closeWindow('folder-rdm')">[ X ]</button></div>
         <div class="market-grid">
             <div class="market-item">
-                <div>
-                    <div class="item-title">Слесарный Молоток</div>
-                    <div class="item-desc">Тяжелая сталь. Идеально для бесшумной и быстрой казни со спины. Пробивает каски.</div>
-                </div>
-                <div>
-                    <div class="item-price">150 $</div>
-                    <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Слесарный Молоток', 150)">Выкупить</button>
-                </div>
+                <div><div class="item-title">Слесарный Молоток</div><div class="item-desc">Тяжелая сталь. Идеально для бесшумной казни со спины. Пробивает каски.</div></div>
+                <div><div class="item-price">150 $</div><button class="btn" style="border-color:#b31924;" onclick="processPurchase('Слесарный Молоток', 150)">Выкупить</button></div>
             </div>
             <div class="market-item">
-                <div>
-                    <div class="item-title">Строительная Кувалда</div>
-                    <div class="item-desc">Дробящее орудие весом 5 кг. Ломает кости с первого удара, гарантирует нокаут.</div>
-                </div>
-                <div>
-                    <div class="item-price">450 $</div>
-                    <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Строительная Кувалда', 450)">Выкупить</button>
-                </div>
-            </div>
-                        <div class="market-item">
-                <div>
-                    <div class="item-title">Пластиковый Пакет [Черный]</div>
-                    <div class="item-desc">Инструмент для бесшумных удушений 1-го уровня. Идеально маскирует лицо жертвы, исключая крики и брызги крови. Одноразовый.</div>
-                </div>
-                <div>
-                    <div class="item-price">30 $</div>
-                    <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Пластиковый Пакет', 30)">Выкупить</button>
-                </div>
+                <div><div class="item-title">Строительная Кувалда</div><div class="item-desc">Дробящее орудие весом 5 кг. Ломает кости с первого удара, гарантирует нокаут.</div></div>
+                <div><div class="item-price">450 $</div><button class="btn" style="border-color:#b31924;" onclick="processPurchase('Строительная Кувалда', 450)">Выкупить</button></div>
             </div>
             <div class="market-item">
-                <div>
-                    <div class="item-title">Стальной Серп [Потертый]</div>
-                    <div class="item-desc">Острое сельскохозяйственное лезвие. Позволяет проводить жестокие рубящие казни в ближнем бою. Наносит рваные раны.</div>
-                </div>
-                <div>
-                    <div class="item-price">280 $</div>
-                    <button class="btn" style="border-color:#ff3333;" onclick="processPurchase('Стальной Серп', 280)">Выкупить</button>
-                </div>
+                <div><div class="item-title">Пластиковый Пакет</div><div class="item-desc">Инструмент для удушений 1-го уровня. Исключает крики и брызги крови.</div></div>
+                <div><div class="item-price">30 $</div><button class="btn" style="border-color:#b31924;" onclick="processPurchase('Пластиковый Пакет', 30)">Выкупить</button></div>
+            </div>
+            <div class="market-item">
+                <div><div class="item-title">Стальной Серп</div><div class="item-desc">Острое лезвие. Позволяет проводить жестокие рубящие казни в ближнем бою.</div></div>
+                <div><div class="item-price">280 $</div><button class="btn" style="border-color:#b31924;" onclick="processPurchase('Стальной Серп', 280)">Выкупить</button></div>
             </div>
         </div>
     </div>
-
-    <button class="folder-tab-trigger" style="left: 180px; top: -18px; border-color:#00ffcc; color:#00ffcc;" onclick="extractLayer('folder-umbrella')">03. Хим-Бланк Лаборатории</button>
     <div class="physical-layer folder-umbrella" id="folder-umbrella">
-        <div class="folder-inner-title" style="border-color:#00ffcc; color:#00ffcc;">
-            <span># ФАРМАКОЛОГИЯ: UMBRELLA CORP [ПРЕПАРАТЫ]</span>
-            <button class="close-folder-btn" style="border-color:#00ffcc;" onclick="retractLayer('folder-umbrella')">Убрать на стол X</button>
-        </div>
+        <div class="folder-inner-title" style="color:#00ffcc;"><span># ФАРМАКОЛОГИЯ: UMBRELLA CORP & SECURITY</span><button class="close-window-btn" onclick="closeWindow('folder-umbrella')">[ X ]</button></div>
         <div class="market-grid">
             <div class="market-item">
-                <div>
-                    <div class="item-title">Стимулятор «Адреналин-X»</div>
-                    <div class="item-desc">Шприц-тюбик. Мгновенно блокирует эффекты ранений и ускоряет бег на 40 секунд.</div>
-                </div>
-                <div>
-                    <div class="item-price">800 $</div>
-                    <button class="btn" style="border-color:#00ffcc;" onclick="processPurchase('Адреналин-X', 800)">Выкупить</button>
-                </div>
+                <div><div class="item-title">Стимулятор «Адреналин-X»</div><div class="item-desc">Мгновенно блокирует эффекты ранений и ускоряет бег на 40 секунд.</div></div>
+                <div><div class="item-price">800 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Адреналин-X', 800)">Выкупить</button></div>
             </div>
             <div class="market-item">
-                <div>
-                                <!-- ДИЛЕР 3: SMSMILE SECURITY -->
-            <div style="margin-top: 25px; border-top: 1px dashed #00ffcc; padding-top: 20px;">
-                <div class="shop-brand-title" style="color:#00ffcc; border-color:#00ffcc;"># КОНТРАБАНДА: SMSMILE SECURITY [СНАРЯЖЕНИЕ]</div>
-                <div class="market-grid">
-                    <div class="market-item">
-                        <div>
-                            <div class="item-title">Фарфоровая Маска «Смайлер»</div>
-                            <div class="item-desc">Культовая маска банды. Полностью скрывает личность в базах данных Цербера. Повышает авторитет среди уличных психопатов.</div>
-                        </div>
-                        <div>
-                            <div class="item-price">600 $</div>
-                            <button class="btn" style="border-color:#00ffcc;" onclick="processPurchase('Маску Смайлера', 600)">Выкупить</button>
-                        </div>
-                    </div>
-                    <div class="market-item">
-                        <div>
-                            <div class="item-title">Тяжелый Свинцовый Кастет</div>
-                            <div class="item-desc">Анатомическая форма под пальцы. Превращает любой удар кулаком в дробящий выстрел. Идеально для уличных драк у терминалов.</div>
-                        </div>
-                        <div>
-                            <div class="item-price">90 $</div>
-                            <button class="btn" style="border-color:#00ffcc;" onclick="processPurchase('Свинцовый Кастет', 90)">Выкупить</button>
-                        </div>
-                    </div>
-                </div>
+                <div><div class="item-title">Armored Rope</div><div class="item-desc">Крепкий трос. Подходит для удушения целей или связывания пленных.</div></div>
+                <div><div class="item-price">120 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Армированную Веревку', 120)">Выкупить</button></div>
             </div>
-
-                    <div class="item-title">Armored Rope</div>
-                    <div class="item-desc">Крепкий трос. Подходит для удушения целей или связывания пленных в подвале.</div>
-                </div>
-                <div>
-                    <div class="item-price">120 $</div>
-                    <button class="btn" style="border-color:#00ffcc;" onclick="processPurchase('Армированную Веревку', 120)">Выкупить</button>
-                </div>
+            <div class="market-item">
+                <div><div class="item-title">Маска «Смайлер»</div><div class="item-desc">Культовая маска банды. Полностью скрывает личность в базах данных Цербера.</div></div>
+                <div><div class="item-price">600 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Маску Смайлера', 600)">Выкупить</button></div>
+            </div>
+            <div class="market-item">
+                <div><div class="item-title">Свинцовый Кастет</div><div class="item-desc">Анатомическая форма. Превращает любой удар кулаком в тяжелый нокаут.</div></div>
+                <div><div class="item-price">90 $</div><button class="btn" style="border-color:#00a383;" onclick="processPurchase('Свинцовый Кастет', 90)">Выкупить</button></div>
             </div>
         </div>
     </div>
-
-    <button class="folder-tab-trigger" style="left: 90px; top: 142px; border-color:#ecc94b; color:#ecc94b;" onclick="extractLayer('folder-database')">04. Реестр Улик</button>
     <div class="physical-layer folder-database" id="folder-database">
-        <div class="folder-inner-title" style="border-color:#ecc94b; color:#ecc94b;">
-            <span># АРХИВ ДЕЛ: КАРТОТЕКА ЦЕРБЕРА // ДОСЬЕ ЦЕЛЕЙ</span>
-            <button class="close-folder-btn" style="border-color:#ecc94b;" onclick="retractLayer('folder-database')">Убрать на стол X</button>
-        </div>
+        <div class="folder-inner-title" style="color:#ecc94b;"><span># АРХИВ ДЕЛ: КАРТОТЕКА ЦЕРБЕРА // ДОСЬЕ</span><button class="close-window-btn" onclick="closeWindow('folder-database')">[ X ]</button></div>
         <div class="db-layout">
             <input type="text" id="db-title" placeholder="ИМЯ ОБЪЕКТА / ДЕСКРИПТОР...">
             <textarea id="db-text" placeholder="Укажите ориентировку, грехи или ценность головы..."></textarea>
             <input type="file" id="db-file" accept="image/*">
-            <button class="btn" style="border-color:#ecc94b; color:#ecc94b;" onclick="addNewRecord()">Внести запись в архив</button>
+            <button class="btn" style="border-color:#bfa13b; color:#ecc94b;" onclick="addNewRecord()">Внести запись в архив</button>
             <div class="records-container" id="records-box"></div>
         </div>
     </div>
-
 </div>
 <script>
     function closeDisclaimer() { document.getElementById('disclaimer').style.opacity = '0'; setTimeout(() => document.getElementById('disclaimer').style.display = 'none', 600); }
-
     let balance = parseFloat(localStorage.getItem('mnh_balance')) || 5000;
     let savedRecords = JSON.parse(localStorage.getItem('mnh_records')) || [];
 
-    function updateUI() {
-        document.getElementById('user-crypto-balance').textContent = balance;
-        localStorage.setItem('mnh_balance', balance);
-    }
+    function updateUI() { document.getElementById('user-crypto-balance').textContent = balance; localStorage.setItem('mnh_balance', balance); }
 
     let audioCtx = null;
     function initSystemAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            let osc = audioCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.value = 40;
-            let filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 90;
+            let osc = audioCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.value = 38;
+            let filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 85;
             let gain = audioCtx.createGain(); gain.gain.value = 0.08;
             osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); osc.start();
         }
-        closeDisclaimer();
+        closeDisclaimer(); openWindow('layer-newspaper');
     }
 
     function playIronSound() {
         if (!audioCtx) return;
-        let osc = audioCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.4);
-        let filter = audioCtx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 300;
-        let gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-        osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+        let osc = audioCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 0.35);
+        let filter = audioCtx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 280;
+        let gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.18, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.35);
     }
 
     function playFleshSound() {
         if (!audioCtx) return;
-        let osc = audioCtx.createOscillator(); osc.type = 'triangle'; osc.frequency.setValueAtTime(90, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.2);
-        let gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.6, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-        osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+        let osc = audioCtx.createOscillator(); osc.type = 'triangle'; osc.frequency.setValueAtTime(80, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.25);
+        let gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.25);
     }
 
-    function extractLayer(id) {
-        playIronSound();
-        document.querySelectorAll('.physical-layer').forEach(layer => layer.classList.remove('extracted'));
-        document.getElementById(id).classList.add('extracted');
-    }
-    function retractLayer(id) {
-        playIronSound();
-        document.getElementById(id).classList.remove('extracted');
-    }
+    function openWindow(id) { playIronSound(); const win = document.getElementById(id); win.classList.add('active'); document.querySelectorAll('.physical-layer').forEach(l => l.style.zIndex = '10'); win.style.zIndex = '500'; }
+    function closeWindow(id) { playIronSound(); document.getElementById(id).classList.remove('active'); }
 
     function processPurchase(name, price) {
-        if (balance >= price) {
-            balance -= price; updateUI(); playFleshSound();
-            alert(`[УЗЕЛ СИНДИКАТА]: Выкуплен предмет "${name}". Кэш списан. Координаты тайника залиты в твой КПК.`);
-        } else { alert("[ОТКАЗ]: На крипто-счете пусто. Ликвидируй цель, чтобы получить бабки."); }
+        if (balance >= price) { balance -= price; updateUI(); playFleshSound(); alert(`[УЗЕЛ СИНДИКАТА]: Предмет "${name}" выкуплен.`); } 
+        else { alert("[ОТКАЗ]: На крипто-счете пусто."); }
     }
 
     function renderRecords() {
-        const box = document.getElementById('records-box'); 
-        if (!box) return;
-        box.innerHTML = '';
+        const box = document.getElementById('records-box'); if (!box) return; box.innerHTML = '';
         if (savedRecords.length === 0) {
             const card = document.createElement('div'); card.className = 'record-card';
             card.innerHTML = `<div class="photo-frame"><svg width="40" height="40" viewBox="0 0 100 100" style="fill:#240205;"><circle cx="50" cy="35" r="20"/><path d="M50 60 C20 60 10 90 10 100 L90 100 C90 90 80 60 50 60 Z"/></svg></div><div class="record-text"><div style="color:#ff0000; font-weight:bold; margin-bottom:4px;">ОБЪЕКТ: ОХОТА НА СМАЙЛЕРОВ</div><div>По оперативным сводкам, банда Смайлеров устроила засаду в районе старой свалки. Всем Охотникам приготовиться к ликвидации. Приказ Режиссера активен.</div></div>`;
-            box.appendChild(card);
-            return;
+            box.appendChild(card); return;
         }
         savedRecords.forEach((rec, idx) => {
             const card = document.createElement('div'); card.className = 'record-card';
@@ -383,7 +265,7 @@
     function addNewRecord() {
         const title = document.getElementById('db-title').value.trim(); const text = document.getElementById('db-text').value.trim(); const fileInput = document.getElementById('db-file');
         if (!title || !text) return alert("Заполните бланк дела!");
-        const file = fileInput.files[0];
+        const file = fileInput.files;
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) { savedRecords.push({ title: title, text: text, img: e.target.result }); localStorage.setItem('mnh_records', JSON.stringify(savedRecords)); renderRecords(); };
@@ -395,90 +277,31 @@
     function deleteRecord(idx) { savedRecords.splice(idx, 1); localStorage.setItem('mnh_records', JSON.stringify(savedRecords)); renderRecords(); }
     function openViewer(el) { const m = document.getElementById('img-modal'); document.getElementById('modal-target-img').src = el.src; m.classList.add('active'); }
 
-    updateUI(); renderRecords();
-        // =======================================================
-    // ТОЧЕЧНЫЙ АПГРЕЙД: ГЕНЕРАТОР СЛУЧАЙНЫХ КРИМИНАЛЬНЫХ ХРОНИК
-    // =======================================================
-    function generateRandomRPNews() {
-        const newsContainer = document.querySelector('.news-feed');
-        if (!newsContainer) return;
-        
-        const rumors = [
-            "Местные патрульные Цербера обнаружили три пустые кассеты со следами крови в районе Junkyard. Режиссер объявил награду за поимку оператора.",
-            "Банда Смайлеров устроила засаду на конвой Umbrella Corp. Похищены экспериментальные партии стимуляторов 'Адреналин-X'. В городе объявлено чрезвычайное положение.",
-            "На подпольных рынках Карцера зафиксирован резкий скачок цен на строительные кувалды. Охотники массово скупают тяжелый инструмент перед ночным рейдом.",
-            "Анонимный информатор слил координаты нового тайника RDM Supply в переулках коммерческого района. Копы уже выехали на оцепление зоны."
-        ];
-        
-        const randomRumor = rumors[Math.floor(Math.random() * rumors.length)];
-        
-        const extraArticle = document.createElement('div');
-        extraArticle.className = 'article';
-        extraArticle.innerHTML = `
-            <div class="article-headline" style="background:#241d14; color:#ebd4a8; border-color:#12100e;">ЭКСТРЕННОЕ СООБЩЕНИЕ ИЗ СЕТИ</div>
-            <div class="article-body">
-                <div class="article-text" style="font-style: italic;">
-                    // ПЕРЕХВАТ ЭФИРА: "${randomRumor}" // Следите за своими кошельками и проверяйте углы комнат.
-                </div>
-            </div>
-        `;
-        newsContainer.appendChild(extraArticle);
-    }
-    generateRandomRPNews();
-
-
-    // ==========================================
-    // ТОЧЕЧНЫЙ АПГРЕЙД: СИСТЕМА DRAG & DROP (ОКНА)
-    // ==========================================
     const layers = document.querySelectorAll('.physical-layer');
-    let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let investmentY;
-    let xOffset = 0;
-    let yOffset = 0;
-    let activeLayer = null;
-
-    // При клике на папку она автоматически всплывает на самый верхний слой
+    let isDragging = false; let currentX, currentY, initialX, initialY, activeLayer = null;
     layers.forEach(layer => {
-        layer.style.cursor = 'move';
         layer.addEventListener('mousedown', (e) => {
-            // Игнорируем клики по кнопкам, инпутам и текстовым полям, чтобы они работали
-            if (e.target.closest('button') || e.target.closest('input') || e.target.closest('textarea') || e.target.closest('select')) {
-                return;
-            }
-            
-            activeLayer = layer;
-            // Сбрасываем старый фиксированный класс extracted, переходя на свободное перемещение
-            layer.classList.remove('extracted');
-            
-            // Выводим нажатое окно на передний план среди всех остальных
-            layers.forEach(l => l.style.zIndex = '10');
-            layer.style.zIndex = '500';
-
-            initialX = e.clientX - (parseInt(layer.style.left) || layer.offsetLeft);
-            initialY = e.clientY - (parseInt(layer.style.top) || layer.offsetTop);
-            isDragging = true;
+            if (e.target.closest('button') || e.target.closest('input') || e.target.closest('textarea') || e.target.closest('select') || e.target.closest('svg')) return;
+            activeLayer = layer; document.querySelectorAll('.physical-layer').forEach(l => l.style.zIndex = '10'); layer.style.zIndex = '500';
+            initialX = e.clientX - layer.offsetLeft; initialY = e.clientY - layer.offsetTop; isDragging = true;
         });
     });
+    window.addEventListener('mousemove', (e) => { if (isDragging && activeLayer) { e.preventDefault(); layerX = e.clientX - initialX; layerY = e.clientY - initialY; activeLayer.style.left = layerX + 'px'; activeLayer.style.top = layerY + 'px'; } });
+    window.addEventListener('mouseup', () => { isDragging = false; activeLayer = null; });
 
-    window.addEventListener('mousemove', (e) => {
-        if (isDragging && activeLayer) {
-            e.preventDefault();
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-            
-            // Задаем окну новые координаты по движению мыши
-            activeLayer.style.left = currentX + 'px';
-            activeLayer.style.top = currentY + 'px';
-        }
-    });
-
-    window.addEventListener('mouseup', () => {
-        isDragging = false;
-        activeLayer = null;
-    });
+    function generateRandomRPNews() {
+        const container = document.querySelector('.news-feed'); if (!container) return;
+        const rumors = [
+            "Патрульные Цербера обнаружили три пустые кассеты со следами крови в районе Junkyard.",
+            "Банда Смайлеров устроила засаду на конвой Umbrella Corp. Похищены партии стимуляторов.",
+            "На подпольных рынках Карцера зафиксирован резкий скачок цен на строительные кувалды.",
+            "Анонимный информатор слил координаты тайника RDM Supply в переулках коммерческого района."
+        ];
+        const extra = document.createElement('div'); extra.className = 'article';
+        extra.innerHTML = `<div class="article-headline" style="background:#241d14; color:#ebd4a8;">ЭКСТРЕННЫЙ ПЕРЕХВАТ</div><div class="article-body"><div class="article-text" style="font-style: italic;">// СЕТЬ: "${rumors[Math.floor(Math.random() * rumors.length)]}"</div></div>`;
+        container.appendChild(extra);
+    }
+    updateUI(); renderRecords(); generateRandomRPNews();
 </script>
 </body>
 </html>
