@@ -15,11 +15,11 @@
             min-height: 100vh; overflow: hidden; position: relative;
             user-select: none;
         }
-        body::before {
+                body::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.6) 50%), 
-                        linear-gradient(90deg, rgba(163, 0, 0, 0.04), rgba(0, 255, 255, 0.01), rgba(163, 0, 0, 0.03));
-            z-index: 99999; background-size: 100% 6px, 6px 100%; pointer-events: none;
+            /* Тонкие, редкие линии сканирования, которые не режут глаза */
+            background: linear-gradient(rgba(18, 16, 16, 0) 80%, rgba(0, 0, 0, 0.3) 80%);
+            z-index: 99999; background-size: 100% 4px; pointer-events: none;
         }
         .vhs-noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 15px; background: rgba(255, 255, 255, 0.02);
@@ -117,6 +117,10 @@
     <div class="rec-signal">● СВЯЗЬ ЗАКРЫТА</div>
 </div>
 <div class="desktop-table">
+        <!-- СКРЫТЫЕ ПАСХАЛКИ СИНДИКАТА -->
+    <div class="secret-easter-egg" style="left: 45%; top: 12%;" onclick="findSecretLog('CORE_ERROR', 'ВЫ НАШЛИ СЛИВ КГБ:\n\n[ОБЪЕКТ ЛЕО СТАРК]: Родился в 1953 году. Бывший режиссер категории Б. Подозревается в организации 42 подпольных трансляций. Локация базы: заброшенный сектор Карцера.')"></div>
+    <div class="secret-easter-egg" style="left: 88%; top: 75%;" onclick="findSecretLog('SYSTEM_CORRUPTION', 'ПЕРЕХВАТ ДИСКОРДА АДМИНОВ:\n\n[ADMIN_LOG]: Игроки на ОБТ начали копать под Umbrella Corp. Если они найдут тайник в промзоне раньше времени — экономика сервера ляжет. Заблокируйте доступ к CAM_04.')"></div>
+    <div class="secret-easter-egg" style="left: 15%; top: 85%;" onclick="triggerGlitchScare()"></div>
     <div class="desktop-shortcut-grid">
         <div class="shortcut-icon" onclick="openWindow('layer-newspaper')">
             <svg width="45" height="45" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 16H6c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v12c0 .55-.45 1-1 1zM7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></svg>
@@ -302,6 +306,37 @@
         container.appendChild(extra);
     }
     updateUI(); renderRecords(); generateRandomRPNews();
+        // ЛОГИКА СЕКРЕТНЫХ ПАСХАЛОК СИНДИКАТА
+    function findSecretLog(codeName, text) {
+        if (audioCtx) {
+            let osc = audioCtx.createOscillator(); osc.type = 'square'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.3);
+            let gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.15, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+        }
+        alert(`[ДЕШИФРОВКА СЕТЕВОГО ПАКЕТА: ${codeName}]\n\n${text}`);
+    }
+
+    function triggerGlitchScare() {
+        if (audioCtx) {
+            let osc = audioCtx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(30, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(220, audioCtx.currentTime + 0.6);
+            let filter = audioCtx.createBiquadFilter(); filter.type = 'peaking'; filter.frequency.value = 500;
+            let gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+            osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.6);
+        }
+        
+        const noiseLayer = document.querySelector('.vhs-noise');
+        if (noiseLayer) {
+            noiseLayer.style.height = '100vh';
+            noiseLayer.style.background = 'rgba(255,255,255,0.12)';
+            setTimeout(() => {
+                noiseLayer.style.height = '15px';
+                noiseLayer.style.background = 'rgba(255,255,255,0.02)';
+            }, 700);
+        }
+        alert("[ВНИМАНИЕ]: ОБНАРУЖЕН СЕТЕВОЙ ВИРУС ЦЕРБЕРА // КАНАЛ СКОМПРОМЕТИРОВАН");
+    }
 </script>
 </body>
 </html>
