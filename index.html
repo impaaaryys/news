@@ -335,3 +335,55 @@
 </script>
 </body>
 </html>
+    // ==========================================
+    // ТОЧЕЧНЫЙ АПГРЕЙД: СИСТЕМА DRAG & DROP (ОКНА)
+    // ==========================================
+    const layers = document.querySelectorAll('.physical-layer');
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let investmentY;
+    let xOffset = 0;
+    let yOffset = 0;
+    let activeLayer = null;
+
+    // При клике на папку она автоматически всплывает на самый верхний слой
+    layers.forEach(layer => {
+        layer.style.cursor = 'move';
+        layer.addEventListener('mousedown', (e) => {
+            // Игнорируем клики по кнопкам, инпутам и текстовым полям, чтобы они работали
+            if (e.target.closest('button') || e.target.closest('input') || e.target.closest('textarea') || e.target.closest('select')) {
+                return;
+            }
+            
+            activeLayer = layer;
+            // Сбрасываем старый фиксированный класс extracted, переходя на свободное перемещение
+            layer.classList.remove('extracted');
+            
+            // Выводим нажатое окно на передний план среди всех остальных
+            layers.forEach(l => l.style.zIndex = '10');
+            layer.style.zIndex = '500';
+
+            initialX = e.clientX - (parseInt(layer.style.left) || layer.offsetLeft);
+            initialY = e.clientY - (parseInt(layer.style.top) || layer.offsetTop);
+            isDragging = true;
+        });
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (isDragging && activeLayer) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            
+            // Задаем окну новые координаты по движению мыши
+            activeLayer.style.left = currentX + 'px';
+            activeLayer.style.top = currentY + 'px';
+        }
+    });
+
+    window.addEventListener('mouseup', () => {
+        isDragging = false;
+        activeLayer = null;
+    });
