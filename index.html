@@ -7,11 +7,6 @@
     <style>
         body {
             background-color: #020203;
-            background-image: 
-                radial-gradient(circle at center, #140508 0%, #010102 100%),
-                linear-gradient(rgba(18, 16, 16, 0.3) 50%, rgba(0, 0, 0, 0.7) 50%),
-                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 3px);
-            background-size: 100% 100%, 100% 4px, 100% 3px;
             color: #a30000; font-family: 'Courier New', Courier, monospace;
             margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; overflow: hidden; position: relative; user-select: none;
@@ -101,8 +96,8 @@
     <div class="rec-signal">● СВЯЗЬ ЗАКРЫТА</div>
 </div>
 <div class="desktop-table">
-    <div class="secret-easter-egg" style="left: 45%; top: 15%;" onclick="findSecretLog('CORE_ERROR', 'ВЫ НАШЛИ СЛИВ КГБ:\\n\\n[ОБЪЕКТ ЛЕО СТАРК]: Бывший режиссер снафф-муви. Пароль от сейфа: 9942.')"></div>
-    <div class="secret-easter-egg" style="left: 88%; top: 75%;" onclick="findSecretLog('SYSTEM_CORRUPTION', 'ПЕРЕХВАТ ДИСКОРДА АДМИНОВ:\\n\\n[ADMIN_LOG]: Игроки начали копать под Umbrella Corp.')"></div>
+    <div class="secret-easter-egg" style="left: 45%; top: 15%;" onclick="findSecretLog('CORE_ERROR', 'ВЫ НАШЛИ СЛИВ КГБ:\n\n[ОБЪЕКТ ЛЕО СТАРК]: Бывший режиссер снафф-муви. Пароль от сейфа: 9942.')"></div>
+    <div class="secret-easter-egg" style="left: 88%; top: 75%;" onclick="findSecretLog('SYSTEM_CORRUPTION', 'ПЕРЕХВАТ ДИСКОРДА АДМИНОВ:\n\n[ADMIN_LOG]: Игроки начали копать под Umbrella Corp.')"></div>
     <div class="secret-easter-egg" style="left: 15%; top: 85%;" onclick="triggerGlitchScare()"></div>
     <div class="desktop-shortcut-grid">
         <div class="shortcut-icon" onclick="openWindow('layer-newspaper')"><svg width="45" height="45" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 16H6c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v12c0 .55-.45 1-1 1zM7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></svg><div class="shortcut-label">01. Сводки</div></div>
@@ -252,9 +247,9 @@
             pHP -= 20; updateAsciiArt(pHP); playSoundEffect('flesh'); setTimeout(() => playSoundEffect('scream'), 150);
             if (pHP <= 0) { status.textContent = "СТАТУС: МЕРТВ // СЕРДЦЕ ОСТАНОВИЛОСЬ"; log.innerHTML = "Объект скончался в судорогах от рваных ран железа. Вы переборщили с болью. Допрос сорван. Очистите комнату мучеников. Перезагрузите шлюз для доставки нового тела."; runTypewriterEffect(log); ctrl.innerHTML = ''; return; }
             status.textContent = `СТАТУС: ТРАВМЫ ПЛОТИ // ЗДОРОВЬЕ: ${pHP}%`;
-            if (pStage === 0) { pStage = 1; log.innerHTML = novelDialogs; } 
-            else if (pStage === 1) { pStage = 2; log.innerHTML = novelDialogs; } 
-            else if (pStage === 2) { pStage = 3; log.innerHTML = novelDialogs; } 
+            if (pStage === 0) { pStage = 1; log.innerHTML = novelDialogs[1]; } 
+            else if (pStage === 1) { pStage = 2; log.innerHTML = novelDialogs[2]; } 
+            else if (pStage === 2) { pStage = 3; log.innerHTML = novelDialogs[3]; } 
             else if (pStage === 3) { pHP = 0; updateAsciiArt(0); status.textContent = "СТАТУС: УБИТ С ПЕРЕДОЗИРОВКОЙ БОЛИ"; log.innerHTML = "Вы нанесли финальный удар кувалдой. Череп шпиона раскололся со страшным треском. Информации нет. Допрос полностью провален."; ctrl.innerHTML = ''; }
             runTypewriterEffect(log);
         } else if (type === 'drug') {
@@ -266,7 +261,7 @@
             playSoundEffect('step');
             if (pHP > 60) { log.innerHTML = "Вы медленно шагаете вокруг стула, скрежеща железом по полу. Но шпион Цербера лишь плюет вам под ноги: 'Твои дешевые угрозы на меня не работают, сектант. Я видел вещи истрашнее твоего подвала'. Его воля крепка, слова его не берут. Нужно сначала сломать его тело."; } 
             else if (pHP <= 60 && pHP > 20 && pStage === 2) {
-                pStage = 9; isInterrogated = true; playSoundEffect('iron'); status.textContent = "СТАТУС: СЛОМАН // ПОЛНЫЙ ЗВЕРЬ"; log.innerHTML = novelDialogs; balance += 2500; updateUI(); ctrl.innerHTML = ''; alert("[УСПЕХ СИНДИКАТА]\n\nОбъект полностью сломан. +2500\$ зачислены на ваш баланс. РП-код получен.");
+                pStage = 9; isInterrogated = true; playSoundEffect('iron'); status.textContent = "СТАТУС: СЛОМАН // ПОЛНЫЙ ЗВЕРЬ"; log.innerHTML = novelDialogs[9]; balance += 2500; updateUI(); ctrl.innerHTML = ''; alert("[УСПЕХ СИНДИКАТА]\n\nОбъект полностью сломан. +2500\$ зачислены на ваш баланс. РП-код получен.");
             } else { log.innerHTML = "Вы пытаетесь говорить с ним, но он уже находится в полуобморочном состоянии и бредит. Он бормочет бессвязные слова и не понимает вопросов. Стабилизируйте его адреналином, чтобы вернуть в сознание."; }
             runTypewriterEffect(log);
         }
